@@ -1,0 +1,42 @@
+{
+	"name": "money-bucket",
+	"version": "0.1.0",
+	"author": "Loren Yu <yuloren@gmail.com>",
+	"description": "Manage your money with buckets, not budgets. Use the carrot of buckets to save up for things you want, rather than using the stick of budgets to keep yourself from spending on immediate gratification.",
+	"contributors": [
+		{
+			"name": "Loren Yu",
+			"email": "yuloren@gmail.com"
+		}
+	],
+	"scripts": {
+		"start": "./scripts/start-server.sh",
+		"stop": "./scripts/stop-server.sh",
+		"restart": "./scripts/restart-server.sh",
+		"test": "echo \"We need a testing framework!!!\""
+	},
+	"repository": {
+		"type": "git",
+		"url": "git@github.com:lorenyu/money-bucket.git"
+	},
+	"dependencies": {
+		"async": "0.1.x",
+		"express": "2.x.x",
+		"jade": "0.20.x",
+		"less": "1.x.x",
+		"mongodb": ">=0.9",
+		"underscore": "1.x.x",
+		"underscore.string": "2.x.x"
+	},
+	"devDependencies": {
+		"mocha": "0.14.x",
+		"chai": "0.5.x",
+		"sinon-chai": "1.x.x",
+		"commander": "0.5.x"
+	},
+	"bundleDependencies": [
+	],
+	"engine": {
+		"node": "0.6.x"
+	}
+}
