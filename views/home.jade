@@ -1,0 +1,11 @@
+extends layout
+
+block body_content
+  .row
+    .span12
+      h1 My Money Buckets
+  for bucket in buckets
+    h3.bucket.row
+      .span12
+        .title= bucket.title
+        .amount $#{bucket.amount}
