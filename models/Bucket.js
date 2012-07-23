@@ -19,3 +19,5 @@ var Bucket = module.exports = function(user, bucket) {
     _.extend(this, bucket);
     return this;
 };
+
+Bucket.collectionName = 'buckets';

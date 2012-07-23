@@ -13,3 +13,5 @@ var User = module.exports = function(user) {
     _.extend(this, user);
     return this;
 };
+
+User.collectionName = 'users';
