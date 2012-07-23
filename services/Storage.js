@@ -17,27 +17,42 @@ function _open(callback) {
   });
 }
 
-var Storage = module.exports = {
-  save: function(object, modelClass, callback) {
-    _open(function(err, conn) {
-      if (err) return;
+function _collection(collectionName, callback) {
+  _open(function(err, conn) {
+    if (err) return;
 
-      conn.collection(modelClass.collectionName, function(err, collection) {
+    conn.collection(collectionName, callback);
+  });
+}
+
+var Storage = module.exports = {
+  load: function(modelClass, id, callback) {
+    _collection(modelClass.collectionName, function(err, collection) {
+      if (err) return callback(err);
+
+      collection.findOne({ _id: id }, function(err, object) {
         if (err) return callback(err);
 
-        collection.insert(object,
-          { safe: true },
-          function(err, result) {
+        callback(null, new modelClass(object));
+      });
+    });
+  },
+  save: function(modelClass, object, callback) {
+    _collection(modelClass.collectionName, function(err, collection) {
+      if (err) return callback(err);
+
+      collection.insert(object,
+        { safe: true },
+        function(err, result) {
+          if (err) return callback(err);
+
+          collection.findOne({ _id: object._id }, function(err, object) {
             if (err) return callback(err);
 
-            collection.findOne({ _id: object._id }, function(err, object) {
-              if (err) return callback(err);
-
-              callback(null, new modelClass(object));
-            });
-          }
-        );
-      });
+            callback(null, new modelClass(object));
+          });
+        }
+      );
     });
   }
 };

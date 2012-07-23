@@ -2,7 +2,8 @@ var express = require('express'),
 	mongodb = require('mongodb'),
 	_ = require('underscore'),
 	_s = require('underscore.string'),
-	config = require('./config/config');
+	config = require('./config/config'),
+	services = require('./services');
 
 var app = express.createServer();
 
@@ -28,6 +29,24 @@ app.dynamicHelpers({
 	}
 });
 
+app.param('userId', function(req, res, next, userId) {
+	DeckService.getDeckByName(deckName, function(err, deck) {
+		if (err) return next(err);
+
+		req.deck = deck;
+		next();
+	});
+});
+
+app.param('bucketId', function(req, res, next, bucketId) {
+	DeckService.getDeckByName(deckName, function(err, deck) {
+		if (err) return next(err);
+
+		req.deck = deck;
+		next();
+	});
+});
+
 app.get('/', function(req, res) {
 	res.render('home', {
 		buckets: [
@@ -41,6 +60,13 @@ app.get('/', function(req, res) {
 			}
 		]
 	});
+});
+
+app.post('/api/users/:userId', function(req, res) {
+
+});
+app.post('/api/buckets/:bucketId', function(req, res) {
+
 });
 
 app.listen(config.server.port);
