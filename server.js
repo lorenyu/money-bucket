@@ -35,36 +35,29 @@ app.dynamicHelpers({
 });
 
 app.param('userId', function(req, res, next, userId) {
-  DeckService.getDeckByName(deckName, function(err, deck) {
+  services.UserService.getUser(userId, function(err, user) {
     if (err) return next(err);
 
-    req.deck = deck;
+    req.user = user;
     next();
   });
 });
 
 app.param('bucketId', function(req, res, next, bucketId) {
-  DeckService.getDeckByName(deckName, function(err, deck) {
-    if (err) return next(err);
-
-    req.deck = deck;
-    next();
-  });
+  next();
 });
 
 app.get('/', function(req, res) {
   if (req.session.user) {
-    res.render('home', {
-      buckets: [
-        {
-          title: 'Travel',
-          amount: 150.00
-        },
-        {
-          title: 'Movies',
-          amount: 15.50
-        }
-      ]
+    services.BucketService.getBucketsForUser(req.session.user, function(err, buckets) {
+      if (err) {
+        console.error(err);
+        buckets = [];
+      }
+      res.render('home', {
+        buckets: buckets
+      });
+      return;
     });
   } else {
     res.render('login');
@@ -131,8 +124,15 @@ app.post('/api/auth/login', function(req, res) {
     res.json({ success: true, statusMsg: 'Logged in.'});
   });
 });
-app.post('/api/users/:userId', function(req, res) {
-
+app.get('/api/users/:userId/buckets', function(req, res) {
+  services.BucketService.getBucketsForUser(req.user, function(err, buckets) {
+    if (err) {
+      console.error(err);
+      res.json({ success: false, statusMsg: err });
+      return;
+    }
+    req.json({ success: true, data: buckets});
+  });
 });
 app.post('/api/buckets/:bucketId', function(req, res) {
 

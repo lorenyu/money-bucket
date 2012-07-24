@@ -1,6 +1,7 @@
 var Storage = require('./Storage'),
     Bucket = require('../models/Bucket'),
-    db = require('../db');
+    db = require('../db'),
+    _ = require('underscore');
 
 var BucketService = module.exports = {
   getBucket: function(id, callback) {
