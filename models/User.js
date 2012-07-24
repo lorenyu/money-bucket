@@ -4,7 +4,8 @@ var _ = require('underscore'),
 var User = module.exports = function(user) {
     // whitelist properties
     user = _.pick(user,
-        '_id');
+        '_id',
+        'facebookId');
     // set default properties
     user = _.defaults(user, {
         _id: new ObjectID()
