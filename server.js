@@ -34,6 +34,14 @@ app.dynamicHelpers({
   }
 });
 
+function requireLogin(req, res, next) {
+  if (!req.session.user) {
+    res.redirect('/');
+    return;
+  }
+  next();
+}
+
 app.param('userId', function(req, res, next, userId) {
   services.UserService.getUser(userId, function(err, user) {
     if (err) return next(err);
@@ -44,7 +52,12 @@ app.param('userId', function(req, res, next, userId) {
 });
 
 app.param('bucketId', function(req, res, next, bucketId) {
-  next();
+  services.BucketService.getBucket(bucketId, function(err, bucket) {
+    if (err) return next(err);
+
+    req.bucket = bucket;
+    next();
+  });
 });
 
 app.get('/', function(req, res) {
@@ -62,6 +75,20 @@ app.get('/', function(req, res) {
   } else {
     res.render('login');
   }
+});
+
+app.get('/buckets', requireLogin, function(req, res) {
+  res.redirect('/');
+});
+
+app.get('/buckets/add', requireLogin, function(req, res) {
+  res.render('buckets/add');
+});
+
+app.get('/buckets/:bucketId', requireLogin, function(req, res) {
+  res.render('buckets/bucket', {
+    bucket: req.bucket
+  });
 });
 
 app.post('/api/auth/login', function(req, res) {
@@ -131,11 +158,26 @@ app.get('/api/users/:userId/buckets', function(req, res) {
       res.json({ success: false, statusMsg: err });
       return;
     }
-    req.json({ success: true, data: buckets});
+    res.json({ success: true, data: buckets});
   });
 });
 app.post('/api/buckets/:bucketId', function(req, res) {
 
+});
+
+app.post('/post/buckets/add', requireLogin, function(req, res) {
+  var bucketData = req.param('bucket'),
+      bucket = new models.Bucket(bucketData);
+  bucket.userId = req.session.user._id;
+  services.BucketService.saveBucket(bucket, function(err, bucket) {
+    if (err) {
+      console.error(err);
+      res.redirect('/buckets/add');
+      return;
+    }
+
+    res.redirect('/buckets/' + bucket._id);
+  });
 });
 
 app.listen(config.server.port);

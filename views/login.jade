@@ -1,12 +1,9 @@
 extends layout
 
 block body_content
+  h1 Money Buckets
   .row
-    .span12
-      h1 Money Buckets
-  .row
-    .span12
-      .login.btn.btn-large.btn-primary Login with Facebook
+    .login.btn.btn-large.btn-primary.span3 Login with Facebook
       script
         $(document).ready(function() {
           $('.login').click(function() {

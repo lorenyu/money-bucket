@@ -2,6 +2,7 @@ var _ = require('underscore'),
     ObjectID = require('mongodb').ObjectID;
 
 var User = module.exports = function(user) {
+    user = user || {};
     // whitelist properties
     user = _.pick(user,
         '_id',

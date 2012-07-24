@@ -1,11 +1,15 @@
 extends layout
 
 block body_content
+  h1 My Money Buckets
   .row
-    .span12
-      h1 My Money Buckets
+    a.add-bucket.btn.btn-large.btn-primary.span3(href='/buckets/add') Add Bucket
   for bucket in buckets
     h3.bucket.row
       .span12
-        .title= bucket.title
+        .name= bucket.name
         .amount $#{bucket.amount}
+  script
+    $(document).ready(function() {
+      
+    });

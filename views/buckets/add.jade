@@ -1,0 +1,12 @@
+extends ../layout
+
+block body_content
+  h1 Add New Bucket
+  form.well(action='/post/buckets/add', method='post')
+    label Name
+    input(type='text', name='bucket[name]')
+    label Description
+    textarea(name='bucket[description]')
+    .row
+      .span12
+        input.btn-large.btn-primary(type='submit', value='Save')
