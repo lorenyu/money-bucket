@@ -13,6 +13,7 @@ html
     script(src='/js/lib/underscore.string/underscore.string.js', type='text/javascript')
     script(src='/js/lib/jquery/jquery-1.7.1.js', type='text/javascript')
     script(src='/js/lib/async/async.js', type='text/javascript')
+    script(src='/js/lib/backbone/backbone.js', type='text/javascript')
 
   body
     #fb-root
@@ -21,6 +22,15 @@ html
 
     script(src='/js/main.js', type='text/javascript')
     script(src='/js/auth.js', type='text/javascript')
+    script(src='/js/router.js', type='text/javascript')
+    script(src='/js/models/index.js', type='text/javascript')
+    script(src='/js/models/Bucket.js', type='text/javascript')
+    script(src='/js/models/BucketCollection.js', type='text/javascript')
+    script(src='/js/models/User.js', type='text/javascript')
+    script(src='/js/models/UserCollection.js', type='text/javascript')
+    script
+      new MB.Router()
+      Backbone.history.start()
     script
       (function() {
         var callbacks = [];
