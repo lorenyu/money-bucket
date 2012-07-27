@@ -9,8 +9,14 @@ var User = module.exports = function(user) {
         'facebookId');
     // set default properties
     user = _.defaults(user, {
-        _id: new ObjectID()
+        _id: ObjectID()
     });
+
+    // if _id is a string, then convert to ObjectID
+    if (!(user._id instanceof ObjectID)) {
+        user._id = ObjectID(user._id);
+    }
+
     // assign properties to object instance
     _.extend(this, user);
     return this;

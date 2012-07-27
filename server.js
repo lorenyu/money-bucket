@@ -39,7 +39,8 @@ function requireLogin(req, res, next) {
     res.redirect('/');
     return;
   }
-  req.loggedInUser = req.session.user;
+
+  req.loggedInUser = new mondels.User(req.session.user);
   next();
 }
 
@@ -48,18 +49,27 @@ function ajaxRequireLogin(req, res, next) {
     next(new Error('Login required'));
     return;
   }
-  req.loggedInUser = req.session.user;
+
+  req.loggedInUser = new models.User(req.session.user);
   next(); 
 }
 
 function andRestrictToSelf(req, res, next) {
-  if (req.loggedInUser &&
-      req.user &&
-      req.loggedInUser._id == req.user._id) {
-    next();
-  } else {
-    next(new Error('Unauthorized'));
+  if (!req.loggedInUser) {
+    next(new Error('User not logged in'));
+    return;
   }
+
+  if (!req.user) {
+    next(new Error('No user defined'));
+    return;
+  }
+
+  if (req.loggedInUser._id.toHexString() !== req.user._id.toHexString()) {
+    next(new Error('Unauthorized: user ' + req.loggedInUser._id + ' trying to access user ' + req.user._id ));
+    return;
+  }
+  next();
 }
 
 app.param('userId', function(req, res, next, userId) {
@@ -88,6 +98,7 @@ app.get('/', function(req, res) {
         buckets = [];
       }
       res.render('home', {
+        layout: 'layout',
         buckets: buckets
       });
       return;
@@ -110,6 +121,8 @@ app.get('/buckets/:bucketId', requireLogin, function(req, res) {
     bucket: req.bucket
   });
 });
+
+
 
 app.post('/api/auth/login', function(req, res) {
   async.waterfall([
@@ -167,9 +180,15 @@ app.post('/api/auth/login', function(req, res) {
       res.json({ success: false, statusMsg: err });
       return;
     }
+
     req.session.user = user;
     res.json({ success: true, statusMsg: 'Logged in.'});
   });
+});
+
+
+app.get('/api/users/:userId', ajaxRequireLogin, andRestrictToSelf, function(req, res) {
+  res.json(req.user);
 });
 app.get('/api/users/:userId/buckets', ajaxRequireLogin, andRestrictToSelf, function(req, res) {
   services.BucketService.getBucketsForUser(req.user, function(err, buckets) {
