@@ -1,3 +1,5 @@
+MB.namespace('models');
+
 MB.models.Bucket = Backbone.Model.extend({
 
   defaults: {
