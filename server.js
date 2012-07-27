@@ -206,5 +206,15 @@ app.post('/api/users/:userId/buckets', ajaxRequireLogin, andRestrictToSelf, func
   });
 });
 
+
+
+app.get('/js/renderers/*.js', function(req, res) {
+  var path = req.params[0];
+  services.RendererService.getClientRenderer(path, function(err, render) {
+    res.send(render, { 'Content-Type' : 'text/javascript' });
+  });
+});
+
+
 app.listen(config.server.port);
 console.log("Server listening on " + config.server.port);
