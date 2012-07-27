@@ -39,7 +39,27 @@ function requireLogin(req, res, next) {
     res.redirect('/');
     return;
   }
+  req.loggedInUser = req.session.user;
   next();
+}
+
+function ajaxRequireLogin(req, res, next) {
+  if (!req.session.user) {
+    next(new Error('Login required'));
+    return;
+  }
+  req.loggedInUser = req.session.user;
+  next(); 
+}
+
+function andRestrictToSelf(req, res, next) {
+  if (req.loggedInUser &&
+      req.user &&
+      req.loggedInUser._id == req.user._id) {
+    next();
+  } else {
+    next(new Error('Unauthorized'));
+  }
 }
 
 app.param('userId', function(req, res, next, userId) {
@@ -151,32 +171,38 @@ app.post('/api/auth/login', function(req, res) {
     res.json({ success: true, statusMsg: 'Logged in.'});
   });
 });
-app.get('/api/users/:userId/buckets', function(req, res) {
+app.get('/api/users/:userId/buckets', ajaxRequireLogin, andRestrictToSelf, function(req, res) {
   services.BucketService.getBucketsForUser(req.user, function(err, buckets) {
     if (err) {
       console.error(err);
-      res.json({ success: false, statusMsg: err });
+      res.json({});
       return;
     }
-    res.json({ success: true, data: buckets});
+    res.json(buckets);
   });
 });
-app.post('/api/buckets/:bucketId', function(req, res) {
-
+app.get('/api/users/:userId/buckets/:bucketId', ajaxRequireLogin, andRestrictToSelf, function(req, res) {
+  if (!req.bucket) {
+    console.error('Bucket not found');
+    res.json({});
+    return;
+  }
+  res.json(req.bucket);
 });
 
-app.post('/post/buckets/add', requireLogin, function(req, res) {
-  var bucketData = req.param('bucket'),
+app.post('/api/users/:userId/buckets', ajaxRequireLogin, andRestrictToSelf, function(req, res) {
+  var bucketData = req.body,
       bucket = new models.Bucket(bucketData);
-  bucket.userId = req.session.user._id;
+
+  bucket.userId = req.user._id;
   services.BucketService.saveBucket(bucket, function(err, bucket) {
     if (err) {
       console.error(err);
-      res.redirect('/buckets/add');
+      res.json({});
       return;
     }
 
-    res.redirect('/buckets/' + bucket._id);
+    res.json(bucket);
   });
 });
 
