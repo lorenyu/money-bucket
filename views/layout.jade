@@ -40,6 +40,7 @@ html
         MB.user.fetch({
           success: function() {
             console.log('User fetched');
+            MB.user.get('buckets').fetch()
             new MB.Router();
             Backbone.history.start();
           }
