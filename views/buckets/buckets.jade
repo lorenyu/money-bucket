@@ -1,0 +1,5 @@
+for bucket in buckets
+  .bucket
+    a(href='/buckets/' + bucket._id)
+      span.name= bucket.name
+      span.amount $#{bucket.amount}
