@@ -86,7 +86,11 @@ app.param('userId', function(req, res, next, userId) {
 
 app.param('bucketId', function(req, res, next, bucketId) {
   services.BucketService.getBucket(ObjectID(bucketId), function(err, bucket) {
-    if (err) return next(err);
+    if (err) {
+      console.error('Bucket ' + bucketId + ' not found');
+      res.json({});
+      return;
+    }
 
     req.bucket = bucket;
     next();
@@ -191,11 +195,6 @@ app.get('/api/users/:userId/buckets', ajaxRequireLogin, andRestrictToSelf, funct
   });
 });
 app.get('/api/users/:userId/buckets/:bucketId', ajaxRequireLogin, andRestrictToSelf, function(req, res) {
-  if (!req.bucket) {
-    console.error('Bucket not found');
-    res.json({});
-    return;
-  }
   res.json(req.bucket);
 });
 app.post('/api/users/:userId/buckets', ajaxRequireLogin, andRestrictToSelf, function(req, res) {
@@ -204,6 +203,17 @@ app.post('/api/users/:userId/buckets', ajaxRequireLogin, andRestrictToSelf, func
 
   bucket.userId = req.user.id;
   services.BucketService.saveBucket(bucket, function(err, bucket) {
+    if (err) {
+      console.error(err);
+      res.json({});
+      return;
+    }
+
+    res.json(bucket);
+  });
+});
+app.post('/api/users/:userId/buckets/:bucketId', ajaxRequireLogin, andRestrictToSelf, function(req, res) {
+  services.BucketService.saveBucket(req.bucket, function(err, bucket) {
     if (err) {
       console.error(err);
       res.json({});
