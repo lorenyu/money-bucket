@@ -1,7 +1,8 @@
 var Storage = require('./Storage'),
     Bucket = require('../models/Bucket'),
     db = require('../db'),
-    _ = require('underscore');
+    _ = require('underscore'),
+    ObjectID = require('mongodb').ObjectID;
 
 var BucketService = module.exports = {
   getBucket: function(id, callback) {
@@ -14,6 +15,7 @@ var BucketService = module.exports = {
     db.collection(Bucket.collectionName, function(err, collection) {
       collection.find({ 'userId': user._id }).toArray(function(err, buckets) {
         buckets = _.map(buckets, function(bucket) {
+          bucket.id = bucket._id.toHexString();
           return new Bucket(bucket);
         });
         callback(null, buckets);

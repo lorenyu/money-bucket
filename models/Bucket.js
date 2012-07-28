@@ -1,17 +1,16 @@
-var _ = require('underscore'),
-    ObjectID = require('mongodb').ObjectID;
+var _ = require('underscore');
 
 var Bucket = module.exports = function(bucket) {
     bucket = bucket || {};
     // whitelist properties
     bucket = _.pick(bucket,
-        '_id',
+        'id',
         'name',
         'description',
         'amount');
     // set default properties
     bucket = _.defaults(bucket, {
-        _id: new ObjectID(),
+        id: '',
         name: 'New bucket',
         amount: 0,
         userId: 0

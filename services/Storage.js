@@ -18,6 +18,7 @@ var Storage = module.exports = {
           return;
         }
 
+        object.id = object._id.toHexString();
         callback(null, new modelClass(object));
       });
     });
@@ -31,7 +32,7 @@ var Storage = module.exports = {
         function(err, result) {
           if (err) return callback(err);
 
-          collection.findOne({ _id: object._id }, function(err, object) {
+          collection.findOne({ _id: ObjectID(object.id) }, function(err, object) {
             if (err) return callback(err);
 
             if (!object) {
@@ -41,6 +42,7 @@ var Storage = module.exports = {
               return;
             }
 
+            object.id = object._id.toHexString();
             callback(null, new modelClass(object));
           });
         }

@@ -1,25 +1,21 @@
-var _ = require('underscore'),
-    ObjectID = require('mongodb').ObjectID;
+var _ = require('underscore');
 
 var User = module.exports = function(user) {
-    user = user || {};
-    // whitelist properties
-    user = _.pick(user,
-        '_id',
-        'facebookId');
-    // set default properties
-    user = _.defaults(user, {
-        _id: ObjectID()
-    });
+  user = user || {};
 
-    // if _id is a string, then convert to ObjectID
-    if (!(user._id instanceof ObjectID)) {
-        user._id = ObjectID(user._id);
-    }
+  // whitelist properties
+  user = _.pick(user,
+    'id',
+    'facebookId');
 
-    // assign properties to object instance
-    _.extend(this, user);
-    return this;
+  // set default properties
+  user = _.defaults(user, {
+    id: ''
+  });
+
+  // assign properties to object instance
+  _.extend(this, user);
+  return this;
 };
 
 User.collectionName = 'users';

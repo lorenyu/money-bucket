@@ -11,7 +11,7 @@ var express = require('express'),
 
 var app = express.createServer();
 
-app.use(express.logger());
+app.use(express.logger('dev'));
 app.use(express.cookieParser());
 app.use(express.bodyParser());
 app.use(express.methodOverride());
@@ -41,6 +41,7 @@ function requireLogin(req, res, next) {
     return;
   }
 
+  console.log(req.session.user);
   req.loggedInUser = new mondels.User(req.session.user);
   next();
 }
@@ -51,6 +52,7 @@ function ajaxRequireLogin(req, res, next) {
     return;
   }
 
+  console.log(req.session.user);
   req.loggedInUser = new models.User(req.session.user);
   next(); 
 }
@@ -66,8 +68,13 @@ function andRestrictToSelf(req, res, next) {
     return;
   }
 
-  if (req.loggedInUser._id.toHexString() !== req.user._id.toHexString()) {
-    next(new Error('Unauthorized: user ' + req.loggedInUser._id + ' trying to access user ' + req.user._id ));
+  console.log(req.loggedInUser.id);
+  console.log(typeof req.loggedInUser.id);
+  console.log(req.user.id);
+  console.log(typeof req.user.id);
+
+  if (req.loggedInUser.id !== req.user.id) {
+    next(new Error('Unauthorized: user ' + req.loggedInUser.id + ' trying to access user ' + req.user.id ));
     return;
   }
   next();
@@ -168,6 +175,7 @@ app.post('/api/auth/login', function(req, res) {
     }
 
     req.session.user = user;
+    console.log('Logged in as user ' + user.id);
     res.json({ success: true, statusMsg: 'Logged in.'});
   });
 });
@@ -199,7 +207,7 @@ app.post('/api/users/:userId/buckets', ajaxRequireLogin, andRestrictToSelf, func
   var bucketData = req.body,
       bucket = new models.Bucket(bucketData);
 
-  bucket.userId = req.user._id;
+  bucket.userId = req.user.id;
   services.BucketService.saveBucket(bucket, function(err, bucket) {
     if (err) {
       console.error(err);
