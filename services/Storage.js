@@ -32,6 +32,10 @@ var Storage = module.exports = {
         function(err, result) {
           if (err) return callback(err);
 
+          if (!object.id) {
+            object.id = ObjectID().toHexString();
+          }
+
           collection.findOne({ _id: ObjectID(object.id) }, function(err, object) {
             if (err) return callback(err);
 
