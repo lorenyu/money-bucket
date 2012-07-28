@@ -6,7 +6,7 @@ MB.views.pages.AddBucketPageView = Backbone.View.extend({
   initialize: function(options) {
   },
   render: function() {
-    // this.$el.html(MB.render.home({ buckets: this.model.get('buckets').toJSON() }));
+    this.$el.html(MB.render.______({ ______ }));
     return this;
   }
 });

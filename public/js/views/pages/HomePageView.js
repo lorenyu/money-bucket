@@ -16,6 +16,6 @@ MB.views.pages.HomePageView = Backbone.View.extend({
     return this;
   },
   addBucket: function() {
-    console.log('addBucket');
+    MB.router.go('buckets/add');
   }
 });

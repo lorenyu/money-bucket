@@ -7,20 +7,16 @@ MB.Router = Backbone.Router.extend({
     'buckets/:bucketId':          'bucket'
   },
 
+  go: function(routeName) {
+    this.navigate(routeName, { trigger: true });
+  },
+
   home: function() {
-    MB.page = new MB.views.pages.HomePageView({
-      model: MB.user,
-      className: 'home-page'
-    });
-    $('.container-fluid').html(MB.page.el);
+    this._createPageView(MB.views.pages.HomePageView);
   },
 
   addBucket: function() {
-    MB.page = new MB.views.pages.AddBucketPageView({
-      model: MB.user,
-      className: 'add-bucket-page'
-    });
-    $('.container-fluid').html(MB.page.el);
+    this._createPageView(MB.views.pages.AddBucketPageView);
   },
 
   buckets: function() {
@@ -29,6 +25,14 @@ MB.Router = Backbone.Router.extend({
 
   bucket: function(bucketId) {
     console.log('bucket' + bucketId);
+  },
+
+  _createPageView: function(pageClass) {
+    MB.page = new pageClass({
+      model: MB.user
+    });
+    $('.container-fluid').html(MB.page.el);
+    MB.page.render();
   }
 
 });
