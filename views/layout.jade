@@ -37,6 +37,7 @@ html
       script(src='/js/views/BucketView.js', type='text/javascript')
       script(src='/js/views/BucketCollectionView.js', type='text/javascript')
       script(src='/js/views/pages/AddBucketPageView.js', type='text/javascript')
+      script(src='/js/views/pages/BucketPageView.js', type='text/javascript')
       script(src='/js/views/pages/HomePageView.js', type='text/javascript')
       script
         MB.user = new MB.models.User({
@@ -45,9 +46,12 @@ html
         MB.user.fetch({
           success: function() {
             console.log('User fetched');
-            MB.user.get('buckets').fetch()
-            MB.router = new MB.Router();
-            Backbone.history.start();
+            MB.user.get('buckets').fetch({
+              success: function() {
+                MB.router = new MB.Router();
+                Backbone.history.start();
+              }
+            });
           }
         });
     script

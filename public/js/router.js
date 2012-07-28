@@ -12,24 +12,28 @@ MB.Router = Backbone.Router.extend({
   },
 
   home: function() {
-    this._createPageView(MB.views.pages.HomePageView);
+    MB.page = new MB.views.pages.HomePageView({
+      model: MB.user
+    });
+    $('.container-fluid').html(MB.page.el);
+    MB.page.render();
   },
 
   addBucket: function() {
-    this._createPageView(MB.views.pages.AddBucketPageView);
+    MB.page = new MB.views.pages.AddBucketPageView({
+      model: MB.user
+    });
+    $('.container-fluid').html(MB.page.el);
+    MB.page.render();
   },
 
   buckets: function() {
-    console.log('buckets');
+    this.go('');
   },
 
   bucket: function(bucketId) {
-    console.log('bucket' + bucketId);
-  },
-
-  _createPageView: function(pageClass) {
-    MB.page = new pageClass({
-      model: MB.user
+    MB.page = new MB.views.pages.BucketPageView({
+      model: MB.user.get('buckets').get(bucketId)
     });
     $('.container-fluid').html(MB.page.el);
     MB.page.render();
