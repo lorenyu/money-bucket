@@ -1,11 +1,11 @@
 h1 My Money Buckets
 .row
-  a.add-bucket.btn.btn-large.btn-primary.span3(href='#/buckets/add') Add Bucket
+  a.add-bucket.btn.btn-large.btn-primary.span3(href='#buckets/add') Add Bucket
 .row
   .span12
     ul.nav.nav-tabs.nav-stacked
       for bucket in buckets
         li.bucket
-          a(href='#/buckets/' + bucket._id)
+          a(href='#buckets/' + bucket._id)
             span.name= bucket.name
             span.amount $#{bucket.amount}
