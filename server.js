@@ -11,7 +11,7 @@ var express = require('express'),
 
 var app = express.createServer();
 
-app.use(express.logger('dev'));
+app.use(express.logger(config.logging.format));
 app.use(express.cookieParser());
 app.use(express.bodyParser());
 app.use(express.methodOverride());
