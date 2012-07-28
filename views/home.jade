@@ -6,6 +6,6 @@ h1 My Money Buckets
     ul.nav.nav-tabs.nav-stacked
       for bucket in buckets
         li.bucket
-          a(href='#buckets/' + bucket._id)
+          a(href='#buckets/' + bucket.id)
             span.name= bucket.name
             span.amount $#{bucket.amount}
