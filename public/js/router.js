@@ -8,14 +8,19 @@ MB.Router = Backbone.Router.extend({
   },
 
   home: function() {
-    new MB.views.MainView({
+    MB.page = new MB.views.pages.HomePageView({
       model: MB.user,
-      el: $('.container-fluid')
+      className: 'home-page'
     });
+    $('.container-fluid').html(MB.page.el);
   },
 
   addBucket: function() {
-    alert('add bucket');
+    MB.page = new MB.views.pages.AddBucketPageView({
+      model: MB.user,
+      className: 'add-bucket-page'
+    });
+    $('.container-fluid').html(MB.page.el);
   },
 
   buckets: function() {

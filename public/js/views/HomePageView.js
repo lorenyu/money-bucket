@@ -1,6 +1,6 @@
-MB.namespace('views');
+MB.namespace('views.pages');
 
-MB.views.MainView = Backbone.View.extend({
+MB.views.pages.HomePageView = Backbone.View.extend({
   events: {
     'click .add-bucket':      'addBucket'
   },
