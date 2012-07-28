@@ -1,16 +1,21 @@
 MB.Router = Backbone.Router.extend({
 
   routes: {
-    '': 'home',
-    'buckets': 'buckets',
-    'buckets/:bucketId': 'bucket'
+    '':                           'home',
+    'buckets':                    'buckets',
+    'buckets/add':                'addBucket',
+    'buckets/:bucketId':          'bucket'
   },
 
   home: function() {
-    MB.user.get('buckets').on('reset', function() {
-      console.log('buckets reset');
-      $('.container-fluid').html(MB.render.home({ buckets: MB.user.get('buckets').toJSON() }));
+    new MB.views.MainView({
+      model: MB.user,
+      el: $('.container-fluid')
     });
+  },
+
+  addBucket: function() {
+    alert('add bucket');
   },
 
   buckets: function() {
