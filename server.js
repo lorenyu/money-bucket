@@ -6,6 +6,7 @@ var express = require('express'),
   config = require('./config/config'),
   models = require('./models'),
   services = require('./services'),
+  ObjectID = require('mongodb').ObjectID,
 
   https = require('https'); // TODO remove this once we refactor out the controller logic
 
@@ -41,8 +42,7 @@ function requireLogin(req, res, next) {
     return;
   }
 
-  console.log(req.session.user);
-  req.loggedInUser = new mondels.User(req.session.user);
+  req.loggedInUser = req.session.user;
   next();
 }
 
@@ -52,7 +52,7 @@ function ajaxRequireLogin(req, res, next) {
     return;
   }
 
-  console.log(req.session.user);
+  // session serializes everything to JSON so we have to reconstruct the user object
   req.loggedInUser = new models.User(req.session.user);
   next(); 
 }
@@ -68,12 +68,7 @@ function andRestrictToSelf(req, res, next) {
     return;
   }
 
-  console.log(req.loggedInUser.id);
-  console.log(typeof req.loggedInUser.id);
-  console.log(req.user.id);
-  console.log(typeof req.user.id);
-
-  if (req.loggedInUser.id !== req.user.id) {
+  if (!req.loggedInUser.id.equals(req.user.id)) {
     next(new Error('Unauthorized: user ' + req.loggedInUser.id + ' trying to access user ' + req.user.id ));
     return;
   }
@@ -81,7 +76,7 @@ function andRestrictToSelf(req, res, next) {
 }
 
 app.param('userId', function(req, res, next, userId) {
-  services.UserService.getUser(userId, function(err, user) {
+  services.UserService.getUser(ObjectID(userId), function(err, user) {
     if (err) return next(err);
 
     req.user = user;
@@ -90,7 +85,7 @@ app.param('userId', function(req, res, next, userId) {
 });
 
 app.param('bucketId', function(req, res, next, bucketId) {
-  services.BucketService.getBucket(bucketId, function(err, bucket) {
+  services.BucketService.getBucket(ObjectID(bucketId), function(err, bucket) {
     if (err) return next(err);
 
     req.bucket = bucket;
@@ -176,6 +171,7 @@ app.post('/api/auth/login', function(req, res) {
 
     req.session.user = user;
     console.log('Logged in as user ' + user.id);
+    console.log(typeof user.id);
     res.json({ success: true, statusMsg: 'Logged in.'});
   });
 });
@@ -202,7 +198,6 @@ app.get('/api/users/:userId/buckets/:bucketId', ajaxRequireLogin, andRestrictToS
   }
   res.json(req.bucket);
 });
-
 app.post('/api/users/:userId/buckets', ajaxRequireLogin, andRestrictToSelf, function(req, res) {
   var bucketData = req.body,
       bucket = new models.Bucket(bucketData);
@@ -215,6 +210,22 @@ app.post('/api/users/:userId/buckets', ajaxRequireLogin, andRestrictToSelf, func
       return;
     }
 
+    res.json(bucket);
+  });
+});
+app.del('/api/users/:userId/buckets/:bucketId', ajaxRequireLogin, andRestrictToSelf, function(req, res) {
+  if (!req.bucket) {
+    console.error('Bucket not found');
+    res.json({});
+    return;
+  }
+
+  services.BucketService.deleteBucket(req.bucket, function(err, bucket) {
+    if (err) {
+      console.error(err);
+      res.json({});
+      return;
+    }
     res.json(bucket);
   });
 });

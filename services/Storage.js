@@ -1,4 +1,5 @@
 var db = require('../db'),
+    async = require('async'),
     _ = require('underscore'),
     config = require('../config/config').mongodb,
     ObjectID = require('mongodb').ObjectID;
@@ -8,7 +9,7 @@ var Storage = module.exports = {
     db.collection(modelClass.collectionName, function(err, collection) {
       if (err) return callback(err);
 
-      collection.findOne({ _id: ObjectID(id) }, function(err, object) {
+      collection.findOne({ _id: id }, function(err, object) {
         if (err) return callback(err);
 
         if (!object) {
@@ -18,7 +19,7 @@ var Storage = module.exports = {
           return;
         }
 
-        object.id = object._id.toHexString();
+        object.id = object._id;
         callback(null, new modelClass(object));
       });
     });
@@ -27,30 +28,59 @@ var Storage = module.exports = {
     db.collection(modelClass.collectionName, function(err, collection) {
       if (err) return callback(err);
 
+      object._id = object.id;
+      delete(object.id);
+
+      if (!object._id) {
+        object._id = ObjectID();
+      }
+
       collection.insert(object,
         { safe: true },
         function(err, result) {
           if (err) return callback(err);
 
-          if (!object.id) {
-            object.id = ObjectID().toHexString();
-          }
-
-          collection.findOne({ _id: ObjectID(object.id) }, function(err, object) {
+          collection.findOne({ _id: object._id }, function(err, object) {
             if (err) return callback(err);
 
             if (!object) {
-              err = 'No object found with id ' + id + ' in collection ' + modelClass.collectionName;
+              err = 'Object not found after insertion';
               console.error(err);
               callback(err);
               return;
             }
 
-            object.id = object._id.toHexString();
+            object.id = object._id;
             callback(null, new modelClass(object));
           });
         }
       );
+    });
+  },
+  delete: function(modelClass, object, callback) {
+    async.waterfall([
+      function(callback) {
+        db.collection(modelClass.collectionName, callback);
+      },
+      function(collection, callback) {
+        collection.findAndModify({ _id: object.id }, [], {}, { remove: true }, function(err, object) {
+          if (!object) {
+            callback('Object not found');
+            return;
+          }
+
+          callback(null, new modelClass(object));
+        });
+      }
+    ],
+    function(err, object) {
+      if (err) {
+        console.log(err);
+        callback(err);
+        return;
+      }
+
+      callback(null, object);
     });
   }
 };

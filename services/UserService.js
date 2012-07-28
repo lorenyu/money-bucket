@@ -12,18 +12,17 @@ var UserService = module.exports = {
       },
       function(collection, callback) {
         collection.findOne({ 'facebookId': facebookId }, callback);
-      },
-      function(user, callback) {
-        if (!user) {
-          return callback('No user with facebookId ' + facebookId);
-        }
-
-        user.id = user._id.toHexString();
-        user = new User(user);
-        callback(null, user);
       }
     ],
-    callback);
+    function(err, user) {
+      if (!user) {
+        return callback('No user with facebookId ' + facebookId);
+      }
+
+      user.id = user._id;
+      user = new User(user);
+      callback(null, user);
+    });
   },
   getUser: function(id, callback) {
     Storage.load(User, id, callback);

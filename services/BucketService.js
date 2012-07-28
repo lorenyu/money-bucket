@@ -11,11 +11,14 @@ var BucketService = module.exports = {
   saveBucket: function(bucket, callback) {
     Storage.save(Bucket, bucket, callback);
   },
+  deleteBucket: function(bucket, callback) {
+    Storage.delete(Bucket, bucket, callback);
+  },
   getBucketsForUser: function(user, callback) {
     db.collection(Bucket.collectionName, function(err, collection) {
-      collection.find({ 'userId': ObjectID(user.id) }).toArray(function(err, buckets) {
+      collection.find({ 'userId': user.id }).toArray(function(err, buckets) {
         buckets = _.map(buckets, function(bucket) {
-          bucket.id = bucket._id.toHexString();
+          bucket.id = bucket._id;
           return new Bucket(bucket);
         });
         callback(null, buckets);
