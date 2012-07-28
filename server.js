@@ -109,21 +109,6 @@ app.get('/', function(req, res) {
   }
 });
 
-app.get('/buckets', requireLogin, function(req, res) {
-  res.redirect('/');
-});
-
-app.get('/buckets/add', requireLogin, function(req, res) {
-  res.render('buckets/add');
-});
-
-app.get('/buckets/:bucketId', requireLogin, function(req, res) {
-  res.render('buckets/bucket', {
-    bucket: req.bucket
-  });
-});
-
-
 
 app.post('/api/auth/login', function(req, res) {
   async.waterfall([
