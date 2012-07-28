@@ -1,11 +1,19 @@
-h1 My Money Buckets
-.row
-  a.add-bucket.btn.btn-large.btn-primary.span3(href='#buckets/add') Add Bucket
-.row
-  .span12
-    ul.nav.nav-tabs.nav-stacked
-      for bucket in buckets
-        li.bucket
-          a(href='#buckets/' + bucket.id)
-            span.name= bucket.name
-            span.amount $#{bucket.amount}
+.navbar
+  .navbar-inner
+    .container
+      a.brand(href='#') Money Bucket
+      ul.nav
+        li.active
+          a(href='#') Home
+        li
+          a(href='#buckets') My Buckets
+.container-fluid
+  .page-header
+    h1 Money Bucket
+  .row
+    .span6
+      a.btn.btn-large.btn-primary(href='#') Withdraw
+      .lead Need money to spend? Withdraw money from the appropriate bucket.
+    .span6
+      a.btn.btn-large.btn-primary(href='#buckets') My Buckets
+      .lead See how much money you have budgeted in each of your buckets.

@@ -1,5 +1,21 @@
-for bucket in buckets
-  .bucket
-    a(href='/buckets/' + bucket._id)
-      span.name= bucket.name
-      span.amount $#{bucket.amount}
+.navbar
+  .navbar-inner
+    .container
+      a.brand(href='#') Money Bucket
+      ul.nav
+        li
+          a(href='#') Home
+        li.active
+          a(href='#buckets') My Buckets
+.container-fluid
+  .page-header
+    h1 My Buckets
+  .row
+    .span3
+      h3
+        a(href='#buckets/add') Add Bucket
+    for bucket in buckets
+      .bucket.span3
+        h3
+          a.name(href='#buckets/' + bucket.id)= bucket.name
+        .amount $#{bucket.amount}

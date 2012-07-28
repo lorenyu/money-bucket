@@ -1,10 +1,22 @@
-h1 Add New Bucket
-a.back.btn(href='#') Back
-form.well(action='', method='post')
-  label Name
-  input(type='text', name='name')
-  label Description
-  textarea(name='description')
-  .row
-    .span12
-      input.btn-large.btn-primary(type='submit', value='Save')
+.navbar
+  .navbar-inner
+    .container
+      a.brand(href='#') Money Bucket
+      ul.nav
+        li
+          a(href='#') Home
+        li.active
+          a(href='#buckets') My Buckets
+.container-fluid
+  .page-header
+    h1 Add New Bucket
+  form.well(action='', method='post')
+    label(for='name') Name
+    input#name(type='text', name='name')
+    label(for='description') Description
+    textarea#description(name='description')
+    .row
+      .span12
+        input.btn.btn-primary.btn-large(type='submit', value='Save')
+        | 
+        a.btn.btn-large(href='#buckets') Cancel

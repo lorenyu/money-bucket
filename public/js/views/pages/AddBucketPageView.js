@@ -20,6 +20,6 @@ MB.views.pages.AddBucketPageView = Backbone.View.extend({
       console.log('Cannot create bucket');
       return;
     }
-    MB.router.go('/');
+    MB.router.go('buckets');
   }
 });
