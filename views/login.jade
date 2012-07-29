@@ -1,12 +1,17 @@
 extends layout
 
 block body_content
-  h1 Money Buckets
-  .row
-    .login.btn.btn-large.btn-primary.span3 Login with Facebook
-      script
-        $(document).ready(function() {
-          $('.login').click(function() {
-            MB.auth.promptUserForLogin();
+  activeItem = 'home'
+  include nav
+  .container-fluid
+    .hero-unit
+      h1 Money Cubbies
+      h2 Think cubbies, not budgets.
+      p When it comes to saving, decide what specifically you want to save for. Then, set up separate siloed compartments of money, or "cubbies," for each goal and contribute to them on a regular basis.
+      .login.btn.btn-large.btn-primary Try It For Free
+        script
+          $(document).ready(function() {
+            $('.login').click(function() {
+              MB.auth.promptUserForLogin();
+            });
           });
-        });
