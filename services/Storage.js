@@ -35,8 +35,8 @@ var Storage = module.exports = {
         object._id = ObjectID();
       }
 
-      collection.insert(object,
-        { safe: true },
+      collection.findAndModify({ _id: object._id }, [], object,
+        { upsert: true },
         function(err, result) {
           if (err) return callback(err);
 

@@ -8,12 +8,17 @@ var Bucket = module.exports = function(bucket) {
     bucket.id = ObjectID(bucket.id);
   }
 
+  if (bucket.userId && typeof bucket.userId === 'string') {
+    bucket.userId = ObjectID(bucket.userId);
+  }
+
   // whitelist properties
   bucket = _.pick(bucket,
     'id',
     'name',
     'description',
-    'amount');
+    'amount',
+    'userId');
   // set default properties
   bucket = _.defaults(bucket, {
     id: '',

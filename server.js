@@ -212,9 +212,12 @@ app.get('/api/users/:userId/buckets/:bucketId', ajaxRequireLogin, andRestrictToS
 });
 app.post('/api/users/:userId/buckets', ajaxRequireLogin, andRestrictToSelf, function(req, res) {
   var bucketData = req.body,
-      bucket = new models.Bucket(bucketData);
+      bucket;
 
-  bucket.userId = req.user.id;
+  // TODO: this stuff should be moved to UserService.addBucket
+  bucketData.userId = req.user.id;
+  bucket = new models.Bucket(bucketData);
+
   services.BucketService.saveBucket(bucket, function(err, bucket) {
     if (err) {
       console.error(err);
@@ -225,8 +228,9 @@ app.post('/api/users/:userId/buckets', ajaxRequireLogin, andRestrictToSelf, func
     res.json(bucket);
   });
 });
-app.post('/api/users/:userId/buckets/:bucketId', ajaxRequireLogin, andRestrictToSelf, function(req, res) {
-  services.BucketService.saveBucket(req.bucket, function(err, bucket) {
+app.put('/api/users/:userId/buckets/:bucketId', ajaxRequireLogin, andRestrictToSelf, function(req, res) {
+  var bucket = new models.Bucket(req.body);
+  services.BucketService.saveBucket(bucket, function(err, bucket) {
     if (err) {
       console.error(err);
       res.json({});

@@ -10,9 +10,21 @@ block containerContents
     small= bucket.description
   form.well
     .input-prepend
+      .add-on +
+      button.add-1000.btn 1,000
+      button.add-100.btn 100
+      button.add-10.btn 10
+      button.add-1.btn 1
+    .input-prepend
       .add-on $
       input(type='text', name='amount', value=bucket.amount)
-    input.btn.btn-primary(type='submit', name='delete', value='Save')
+    .input-prepend
+      .add-on -
+      button.sub-1000.btn 1,000
+      button.sub-100.btn 100
+      button.sub-10.btn 10
+      button.sub-1.btn 1
+    button.save.btn.btn-primary(type='submit') Save
     | 
     a.btn(href='#buckets') Cancel
-    input.btn.pull-right.btn-danger(type='submit', name='delete', value='Delete')
+    button.delete.btn.btn-danger.pull-right Delete
