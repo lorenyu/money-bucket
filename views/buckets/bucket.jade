@@ -9,7 +9,7 @@ block containerContents
     h1= bucket.name
     small= bucket.description
   form.well
-    .input-prepend
+    .input-prepend.input-append
       .add-on +
       button.add-1000.btn 1,000
       button.add-100.btn 100
@@ -18,7 +18,7 @@ block containerContents
     .input-prepend
       .add-on $
       input(type='text', name='amount', value=bucket.amount)
-    .input-prepend
+    .input-prepend.input-append
       .add-on -
       button.sub-1000.btn 1,000
       button.sub-100.btn 100
