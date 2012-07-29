@@ -106,12 +106,15 @@ app.get('/', function(req, res) {
       }
       res.render('home', {
         layout: 'layout',
-        buckets: buckets
+        buckets: buckets,
+        loggedIn: true
       });
       return;
     });
   } else {
-    res.render('login');
+    res.render('login', {
+      loggedIn: false
+    });
   }
 });
 
@@ -177,6 +180,16 @@ app.post('/api/auth/login', function(req, res) {
     console.log('Logged in as user ' + user.id);
     console.log(typeof user.id);
     res.json({ success: true, statusMsg: 'Logged in.'});
+  });
+});
+app.post('/api/auth/logout', function(req, res) {
+  req.session.destroy(function(err){
+    if (err) {
+      console.error(err);
+      res.json({ success: false });
+      return;
+    }
+    res.json({ success: true });
   });
 });
 

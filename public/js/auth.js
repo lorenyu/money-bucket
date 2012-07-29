@@ -39,3 +39,13 @@ MB.auth.login = function(credentials) {
     }
   });
 };
+
+MB.auth.logout = function() {
+  $.ajax({
+    type: 'POST',
+    url: '/api/auth/logout',
+    success: function() {
+      window.location.reload();
+    }
+  });
+};

@@ -1,3 +1,7 @@
+if typeof(activeItem) === 'undefined'
+  activeItem = ''
+if typeof(loggedIn) === 'undefined'
+  loggedIn = false
 .navbar.navbar-fixed-top
   .navbar-inner
     .container
@@ -7,3 +11,19 @@
           a(href='#') Home
         li(class=(activeItem == 'buckets' ? 'active' : '' ))
           a(href='#buckets') My Buckets
+      
+      ul.nav.pull-right
+        if loggedIn
+          button.logout.btn Logout
+          script
+            $(document).ready(function(){
+              $('.logout').click(MB.auth.logout);
+            });
+        else
+          button.login.btn Login
+          script
+            $(document).ready(function() {
+              $('.login').click(function() {
+                MB.auth.promptUserForLogin();
+              });
+            });
