@@ -7,12 +7,14 @@ block prepend nav
 block containerContents
   .page-header
     h1 My Cubbies
+  .btn-toolbar
+    a.btn(href='#buckets/add')
+      i.icon-plus
+      |  Add Cubby
   .row
-    .span3
-      h3
-        a(href='#buckets/add') Add Cubby
     for bucket in buckets
       .bucket.span3
-        h3
-          a.name(href='#buckets/' + bucket.id)= bucket.name
-        .amount $#{bucket.amount}
+        .well
+          h3
+            a.name(href='#buckets/' + bucket.id)= bucket.name
+          p.amount $#{bucket.amount}
