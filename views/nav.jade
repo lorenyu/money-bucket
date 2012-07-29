@@ -5,12 +5,13 @@ if typeof(loggedIn) === 'undefined'
 .navbar.navbar-fixed-top
   .navbar-inner
     .container
-      a.brand(href='#') Money Bucket
-      ul.nav
-        li(class=(activeItem == 'home' ? 'active' : '' ))
-          a(href='#') Home
-        li(class=(activeItem == 'buckets' ? 'active' : '' ))
-          a(href='#buckets') My Buckets
+      a.brand(href='#') Money Cubbies
+      if loggedIn
+        ul.nav
+          li(class=(activeItem == 'home' ? 'active' : '' ))
+            a(href='#') Home
+          li(class=(activeItem == 'buckets' ? 'active' : '' ))
+            a(href='#buckets') My Cubbies
       
       ul.nav.pull-right
         if loggedIn

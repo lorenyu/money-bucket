@@ -1,13 +1,16 @@
-activeItem = 'buckets'
-loggedIn = true
-include ../nav
-.container-fluid
+extends ../page
+
+block prepend nav
+  activeItem = 'buckets'
+  loggedIn = true
+
+block containerContents
   .page-header
-    h1 My Buckets
+    h1 My Cubbies
   .row
     .span3
       h3
-        a(href='#buckets/add') Add Bucket
+        a(href='#buckets/add') Add Cubby
     for bucket in buckets
       .bucket.span3
         h3

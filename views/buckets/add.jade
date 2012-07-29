@@ -1,9 +1,12 @@
-activeItem = 'buckets'
-loggedIn = true
-include ../nav
-.container-fluid
+extends ../page
+
+block prepend nav
+  activeItem = 'buckets'
+  loggedIn = true
+
+block containerContents
   .page-header
-    h1 Add New Bucket
+    h1 Add New Cubby
   form.well(action='', method='post')
     label(for='name') Name
     input#name(type='text', name='name')

@@ -1,13 +1,16 @@
-activeItem = 'home'
-loggedIn = true
-include nav
-.container-fluid
+extends page
+
+block prepend nav
+  activeItem = 'home'
+  loggedIn = true
+
+block containerContents
   .page-header
-    h1 Money Bucket
+    h1 Money Cubby
   .row
     .span6
       a.btn.btn-large.btn-primary(href='#') Withdraw
-      .lead Need money to spend? Withdraw money from the appropriate bucket.
+      .lead Need money to spend? Withdraw money from the appropriate cubby.
     .span6
-      a.btn.btn-large.btn-primary(href='#buckets') My Buckets
-      .lead See how much money you have budgeted in each of your buckets.
+      a.btn.btn-large.btn-primary(href='#buckets') My Cubbies
+      .lead See how much money you have budgeted in each of your cubbies.

@@ -1,7 +1,10 @@
-activeItem = 'buckets'
-loggedIn = true
-include ../nav
-.container-fluid
+extends ../page
+
+block prepend nav
+  activeItem = 'buckets'
+  loggedIn = true
+
+block containerContents
   .page-header
     h1= bucket.name
     small= bucket.description
