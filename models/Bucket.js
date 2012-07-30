@@ -19,6 +19,7 @@ var Bucket = module.exports = function(bucket) {
     'description',
     'amount',
     'userId');
+
   // set default properties
   bucket = _.defaults(bucket, {
     id: '',
@@ -26,8 +27,17 @@ var Bucket = module.exports = function(bucket) {
     amount: 0,
     userId: 0
   });
+
   // assign properties to object instance
   _.extend(this, bucket);
+
+  // sanitize
+  if (this.amount) {
+    this.amount = parseInt(this.amount);
+    this.amount = isNaN(this.amount) ? 0 : this.amount;
+    this.amount = this.amount < 0 ? 0 : this.amount;
+  }
+
   return this;
 };
 

@@ -11,15 +11,25 @@ var User = module.exports = function(user) {
   // whitelist properties
   user = _.pick(user,
     'id',
+    'amount',
     'facebookId');
 
   // set default properties
   user = _.defaults(user, {
-    id: ''
+    id: '',
+    amount: 0
   });
 
   // assign properties to object instance
   _.extend(this, user);
+
+  // sanitize
+  if (this.amount) {
+    this.amount = parseInt(this.amount);
+    this.amount = isNaN(this.amount) ? 0 : this.amount;
+    this.amount = this.amount < 0 ? 0 : this.amount;
+  }
+  
   return this;
 };
 
