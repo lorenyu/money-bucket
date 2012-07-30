@@ -4,7 +4,8 @@ MB.Router = Backbone.Router.extend({
     '':                           'home',
     'buckets':                    'buckets',
     'buckets/add':                'addBucket',
-    'buckets/:bucketId':          'bucket'
+    'buckets/:bucketId':          'bucket',
+    'withdraw':                   'withdraw'
   },
 
   go: function(routeName) {
@@ -38,6 +39,14 @@ MB.Router = Backbone.Router.extend({
   bucket: function(bucketId) {
     MB.page = new MB.views.pages.BucketPageView({
       model: MB.user.get('buckets').get(bucketId)
+    });
+    $('.root').html(MB.page.el);
+    MB.page.render();
+  },
+
+  withdraw: function() {
+    MB.page = new MB.views.pages.WithdrawPageView({
+      model: MB.user
     });
     $('.root').html(MB.page.el);
     MB.page.render();
