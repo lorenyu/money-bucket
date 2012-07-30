@@ -110,6 +110,7 @@ app.get('/', function(req, res) {
       }
       res.render('pages/home', {
         layout: 'layout',
+        user: new models.User(req.session.user),
         buckets: buckets,
         loggedIn: true
       });

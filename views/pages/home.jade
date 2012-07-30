@@ -6,11 +6,39 @@ block prepend nav
 
 block containerContents
   .page-header
-    h1 Money Cubby
+    h1 Money Cubbies
   .row
-    .span6
-      a.btn.btn-large.btn-primary(href='#withdraw') Withdraw
-      .lead Need money to spend? Withdraw money from the appropriate cubby.
-    .span6
-      a.btn.btn-large.btn-primary(href='#buckets') My Cubbies
-      .lead See how much money you have budgeted in each of your cubbies.
+    if user.amount > 0 && buckets.length > 0
+      .span4
+        .hero-unit
+          h2 Withdraw
+          p Need money to spend? Withdraw money from the appropriate cubby.
+          a.btn.btn-large.btn-primary(href='#withdraw') Withdraw  
+    if buckets.length > 0
+      .span4
+        .hero-unit
+          h2 My Cubbies
+          p See how much money you have budgeted in each of your cubbies.
+          a.btn.btn-large.btn-primary(href='#buckets') My Cubbies
+    if user.amount > 0
+      .span4
+        .hero-unit
+          h2 Update Plan
+          p Enter how much money you have available.
+          form.form-inline
+            .input-prepend
+              .add-on $
+              input.amount.input-small(type='text', placeholder=user.amount)
+            | 
+            .btn.btn-primary Start
+    else
+      .span4
+        .hero-unit
+          h2 Get Started
+          p Start with how much money you have available.
+          form.form-inline.user-amount-form
+            .input-prepend
+              .add-on $
+              input.amount.input-small(type='text', placeholder='0')
+            | 
+            button.btn.btn-primary(type='submit') Start
