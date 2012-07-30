@@ -2,7 +2,8 @@ MB.namespace('views.pages');
 
 MB.views.pages.WithdrawPageView = Backbone.View.extend({
   events: {
-    'click .withdraw': 'withdraw'
+    'click .subtract': 'subtract',
+    'click .submit': 'withdraw'
   },
   withdrawAmount: 0,
   initialize: function(options) {
@@ -15,7 +16,7 @@ MB.views.pages.WithdrawPageView = Backbone.View.extend({
     }));
     return this;
   },
-  withdraw: function(event) {
+  subtract: function(event) {
     var $target = $(event.target),
         amount = parseInt($target.attr('amount')),
         bucketId = $target.parents('.bucket').attr('bucketId'),
@@ -31,5 +32,12 @@ MB.views.pages.WithdrawPageView = Backbone.View.extend({
     this.withdrawAmount += amount;
 
     bucket.set('amount', curAmount);
+  },
+  withdraw: function() {
+    var withdrawAmount = parseInt($('.withdraw-amount'));
+    this.model.get('buckets').each(function(bucket) {
+      bucket.save();
+    });
+    MB.router.go('');
   }
 });

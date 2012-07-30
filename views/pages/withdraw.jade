@@ -13,7 +13,7 @@ block containerContents
     h2
       | $
       span.withdraw-amount= withdrawAmount
-    button.btn.btn-primary Withdraw
+    button.submit.btn.btn-primary Withdraw
   .row
     for bucket in buckets
       .bucket.span3(bucketId=bucket.id)
@@ -22,10 +22,9 @@ block containerContents
           h4
             | $
             span.amount= bucket.amount
-
           .input-prepend.input-append
             .add-on $
-            button.withdraw.btn(class=bucket.amount < 1000 ? 'disabled' : '', amount=1000) 1,000
-            button.withdraw.btn(class=bucket.amount < 100 ? 'disabled' : '', amount=100) 100
-            button.withdraw.btn(class=bucket.amount < 10 ? 'disabled' : '', amount=10) 10
-            button.withdraw.btn(class=bucket.amount < 1 ? 'disabled' : '', amount=1) 1
+            button.subtract.btn(class=bucket.amount < 1000 ? 'disabled' : '', amount=1000) 1,000
+            button.subtract.btn(class=bucket.amount < 100 ? 'disabled' : '', amount=100) 100
+            button.subtract.btn(class=bucket.amount < 10 ? 'disabled' : '', amount=10) 10
+            button.subtract.btn(class=bucket.amount < 1 ? 'disabled' : '', amount=1) 1
