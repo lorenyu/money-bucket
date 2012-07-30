@@ -6,6 +6,7 @@ MB.views.pages.WithdrawPageView = Backbone.View.extend({
     'click .submit': 'withdraw'
   },
   withdrawAmount: 0,
+  unsavedBuckets: [],
   initialize: function(options) {
     this.model.get('buckets').on('change', _.bind(this.render, this));
   },
@@ -32,12 +33,18 @@ MB.views.pages.WithdrawPageView = Backbone.View.extend({
     this.withdrawAmount += amount;
 
     bucket.set('amount', curAmount);
+    this.unsavedBuckets.push(bucket);
   },
   withdraw: function() {
-    var withdrawAmount = parseInt($('.withdraw-amount'));
-    this.model.get('buckets').each(function(bucket) {
+    var withdrawAmount = parseInt($('.withdraw-amount').text()),
+        curUserAmount = this.model.get('amount');
+    curUserAmount -= withdrawAmount;
+    this.model.set('amount', curUserAmount);
+
+    _.each(this.unsavedBuckets, function(bucket) {
       bucket.save();
     });
+    this.model.save();
     MB.router.go('');
   }
 });
