@@ -6,6 +6,11 @@ MB.models.User = Backbone.Model.extend({
     'facebookId': 0,
     'buckets': new MB.models.BucketCollection()
   },
-  urlRoot: '/api/users'
-
+  urlRoot: '/api/users',
+  allocatedAmount: function() {
+    return this.get('buckets').totalAmount();
+  },
+  unallocatedAmount: function() {
+    return this.get('amount') - this.allocatedAmount();
+  }
 });
