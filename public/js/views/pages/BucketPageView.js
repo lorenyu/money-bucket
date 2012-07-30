@@ -19,7 +19,7 @@ MB.views.pages.BucketPageView = Backbone.View.extend({
   initialize: function(options) {
   },
   render: function() {
-    this.$el.html(MB.render.buckets.bucket({ bucket: this.model.toJSON() }));
+    this.$el.html(MB.render.pages.buckets.bucket({ bucket: this.model.toJSON() }));
     this.inputEl = this.$el.find('input[name=amount]');
     return this;
   },

@@ -7,7 +7,7 @@ MB.views.pages.AddBucketPageView = Backbone.View.extend({
   initialize: function(options) {
   },
   render: function() {
-    this.$el.html(MB.render.buckets.add({}));
+    this.$el.html(MB.render.pages.buckets.add({}));
     return this;
   },
   addBucket: function(event) {

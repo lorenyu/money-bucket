@@ -104,7 +104,7 @@ app.get('/', function(req, res) {
         console.error(err);
         buckets = [];
       }
-      res.render('home', {
+      res.render('pages/home', {
         layout: 'layout',
         buckets: buckets,
         loggedIn: true
@@ -112,7 +112,7 @@ app.get('/', function(req, res) {
       return;
     });
   } else {
-    res.render('login', {
+    res.render('pages/login', {
       loggedIn: false
     });
   }

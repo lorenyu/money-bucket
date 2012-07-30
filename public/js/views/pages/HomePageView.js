@@ -8,7 +8,7 @@ MB.views.pages.HomePageView = Backbone.View.extend({
     this.model.get('buckets').on('sync', _.bind(this.render, this));
   },
   render: function() {
-    this.$el.html(MB.render.home({ buckets: this.model.get('buckets').toJSON() }));
+    this.$el.html(MB.render.pages.home({ buckets: this.model.get('buckets').toJSON() }));
     return this;
   }
 });

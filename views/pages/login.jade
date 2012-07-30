@@ -1,8 +1,8 @@
-extends layout
+extends ../layout
 
 block body_content
   activeItem = 'home'
-  include nav
+  include ../components/nav
   .container-fluid
     .hero-unit
       h1 Money Cubbies
@@ -10,4 +10,4 @@ block body_content
       p When it comes to saving, decide what specifically you want to save for. Then, set up separate siloed compartments of money, or "cubbies," for each goal and contribute to them on a regular basis.
       .login.btn.btn-large.btn-primary Try It For Free
     hr
-    include nav-bottom
+    include ../components/footer
