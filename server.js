@@ -77,7 +77,11 @@ function andRestrictToSelf(req, res, next) {
 
 app.param('userId', function(req, res, next, userId) {
   services.UserService.getUser(ObjectID(userId), function(err, user) {
-    if (err) return next(err);
+    if (err) {
+      console.error('User ' + userId + ' not found');
+      res.json({});
+      return;
+    }
 
     req.user = user;
     next();
@@ -196,6 +200,18 @@ app.post('/api/auth/logout', function(req, res) {
 
 app.get('/api/users/:userId', ajaxRequireLogin, andRestrictToSelf, function(req, res) {
   res.json(req.user);
+});
+app.put('/api/users/:userId', ajaxRequireLogin, andRestrictToSelf, function(req, res) {
+  var user = new models.User(req.body);
+  services.UserService.saveUser(user, function(err, user) {
+    if (err) {
+      console.error(err);
+      res.json({});
+      return;
+    }
+
+    res.json(user);
+  });
 });
 app.get('/api/users/:userId/buckets', ajaxRequireLogin, andRestrictToSelf, function(req, res) {
   services.BucketService.getBucketsForUser(req.user, function(err, buckets) {
