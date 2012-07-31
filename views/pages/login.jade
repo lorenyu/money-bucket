@@ -4,10 +4,28 @@ block body_content
   activeItem = 'home'
   include ../components/nav
   .container-fluid
-    .hero-unit
-      h1 Money Cubbies
-      h2 Think cubbies, not budgets.
-      p When it comes to saving, decide what specifically you want to save for. Then, set up separate siloed compartments of money, or "cubbies," for each goal and contribute to them on a regular basis.
-      .login.btn.btn-large.btn-primary Try It For Free
+    .row
+      .span12
+        .hero-unit
+          h1 Money Cubbies
+          h2 Think cubbies, not budgets.
+          p When it comes to saving, decide what specifically you want to save for. Then, set up separate siloed compartments of money, or "cubbies," for each goal and contribute to them on a regular basis.
+          button.login.btn.btn-large.btn-primary Try It For Free
+    .row
+      .span4
+        h2 Withdraw
+        p.lead Need money to spend? Withdraw money from the appropriate cubby.
+        p
+          button.login.btn Try It Out
+      .span4
+        h2 My Cubbies
+        p.lead See how much money you have budgeted in each of your cubbies.
+        p
+          button.login.btn Try It Out
+      .span4
+        h2 Privacy
+        p.lead We use Facebook so you don't need yet another password, but we won't save any of your personal info (not even your name).
+        p
+          button.login.btn Try It Out
     hr
     include ../components/footer
