@@ -10,3 +10,4 @@ MB.models.Bucket = Backbone.Model.extend({
   }
 
 });
+MB.models.Bucket = MB.mixin(MB.models.Bucket, MB.models.util.Resetable);

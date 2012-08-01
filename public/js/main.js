@@ -8,5 +8,14 @@ var MB = {
       cur = cur[namespacePart] = cur[namespacePart] || {};
     }
     return cur;
+  },
+
+  mixin: function(cls, mixinClass) {
+    var ctor = function() {
+      cls.apply(this, arguments);
+      mixinClass.apply(this, arguments);
+    };
+    _.extend(ctor.prototype, cls.prototype, mixinClass.prototype);
+    return ctor;
   }
 };
