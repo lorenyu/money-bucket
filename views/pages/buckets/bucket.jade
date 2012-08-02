@@ -1,32 +1,11 @@
-extends ../page
-
-block prepend nav
-  activeItem = 'buckets'
-  loggedIn = true
-
-block containerContents
-  .page-header
-    h1= bucket.name
-    small= bucket.description
-  form.well
-    .input-prepend.input-append
-      .add-on
-        i.icon-plus
-      button.add-1000.btn 1,000
-      button.add-100.btn 100
-      button.add-10.btn 10
-      button.add-1.btn 1
-    .input-prepend
-      .add-on $
-      input(type='text', name='amount', value=bucket.amount)
-    .input-prepend.input-append
-      .add-on
-        i.icon-minus
-      button.sub-1000.btn 1,000
-      button.sub-100.btn 100
-      button.sub-10.btn 10
-      button.sub-1.btn 1
-    button.save.btn.btn-primary(type='submit') Save
-    | 
-    a.btn(href='#buckets') Cancel
-    button.delete.btn.btn-danger.pull-right Delete
+.bucket.span3(bucketId=bucket.id)
+  .well
+    h3.name= bucket.name
+    h4.amount $#{bucket.amount}
+    p
+      .input-prepend.input-append
+        .add-on $
+        button.btn(amount=1000) 1,000
+        button.btn(amount=100) 100
+        button.btn(amount=10) 10
+        button.btn(amount=1) 1

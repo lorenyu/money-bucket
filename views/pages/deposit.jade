@@ -1,0 +1,32 @@
+extends page
+
+block prepend nav
+  activeItem = 'deposit'
+  loggedIn = true
+
+block containerContents
+  .page-header
+    h1 Deposit Money 
+      small Fulfill your goals.
+  .row
+    .span12
+      form.deposit-form
+        .input-prepend.input-append
+          .add-on $
+          input.input-medium.deposit-amount(type='text', placeholder=0)
+          button.btn(type='submit') Deposit
+  .row
+    .span2
+      p.lead $#{user.amount} Total
+    .span2
+      p.lead $#{allocatedAmount} Allocated
+    .span2
+      p.lead $#{unallocatedAmount} Unallocated
+  if isAllocating
+    .row
+      .span12
+        .progress.progress-success
+          .bar
+  .row
+    for bucket in buckets
+      include buckets/bucket

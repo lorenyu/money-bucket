@@ -7,14 +7,9 @@ if typeof(loggedIn) === 'undefined'
     .container
       a.brand(href='#') Money Cubbies
       if loggedIn
-        ul.nav
-          li(class=(activeItem == 'home' ? 'active' : '' ))
-            a(href='#') Home
-          li(class=(activeItem == 'withdraw' ? 'active' : '' ))
-            a(href='#withdraw') Withdraw
-          li(class=(activeItem == 'buckets' ? 'active' : '' ))
-            a(href='#buckets') My Cubbies
-      
+        .nav.btn-group
+          a.btn(href='#deposit', class=(activeItem == 'deposit' ? 'active' : '' )) Deposit
+          a.btn(href='#withdraw', class=(activeItem == 'withdraw' ? 'active' : '' )) Withdraw
       ul.nav.pull-right
         if loggedIn
           button.logout.btn Logout

@@ -4,7 +4,7 @@ MB.Router = Backbone.Router.extend({
     '':                           'home',
     'buckets':                    'buckets',
     'buckets/add':                'addBucket',
-    'buckets/:bucketId':          'bucket',
+    'deposit':                    'deposit',
     'withdraw':                   'withdraw'
   },
 
@@ -36,9 +36,9 @@ MB.Router = Backbone.Router.extend({
     MB.page.render();
   },
 
-  bucket: function(bucketId) {
-    MB.page = new MB.views.pages.BucketPageView({
-      model: MB.user.get('buckets').get(bucketId)
+  deposit: function() {
+    MB.page = new MB.views.pages.DepositPageView({
+      model: MB.user
     });
     $('.root').html(MB.page.el);
     MB.page.render();
