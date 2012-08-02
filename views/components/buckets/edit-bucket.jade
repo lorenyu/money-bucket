@@ -1,0 +1,11 @@
+form.edit-bucket-form.well
+  input(type='hidden', name='id', value=bucket.id)
+  label(for='name') Name
+  input#name(type='text', name='name', value=bucket.name)
+  label(for='description') Description
+  textarea#description(name='description')
+    = bucket.description
+  .btn-toolbar
+    input.save.btn.btn-primary(type='submit', value='Save')
+    | 
+    button.cancel.btn Cancel

@@ -2,40 +2,60 @@ MB.namespace('views.pages');
 
 MB.views.pages.BucketsPageView = Backbone.View.extend({
   events: {
-    'click .add': 'add'
+    'click .add-bucket': 'addBucket',
+    'click .bucket .edit': 'edit',
+    'click .bucket .delete': 'delete',
+    'submit .edit-bucket-form': 'saveBucket',
+    'click .edit-bucket-form .cancel': 'cancelEdit'
   },
+  editingBuckets: {},
   initialize: function(options) {
     this.model.get('buckets').on('reset', _.bind(this.render, this));
     this.model.get('buckets').on('sync', _.bind(this.render, this));
     this.model.get('buckets').on('change', _.bind(this.render, this));
-    this.model.on('change', _.bind(this.render, this));
   },
   render: function() {
-    this.$el.html(MB.render.pages.buckets.buckets({
-      user: this.model.toJSON(),
+    this.$el.html(MB.render.pages.buckets({
       buckets: this.model.get('buckets').toJSON(),
-      allocatedAmount: this.model.allocatedAmount(),
-      unallocatedAmount: this.model.unallocatedAmount()
+      editingBuckets: this.editingBuckets
     }));
-    var allocatedPercentage = this.model.allocatedAmount() / this.model.get('amount');
-    $('.bar').css('width', parseInt(100 * allocatedPercentage) + '%' );
     return this;
   },
-  add: function(event) {
+  addBucket: function() {
+    MB.page = new MB.views.pages.BucketsPageView({
+      model: MB.user
+    });
+    
+  },
+  edit: function(event) {
     var $target = $(event.target),
-        amount = parseInt($target.attr('amount')),
+        bucketId = $target.parents('.bucket').attr('bucketId');
+    this.editingBuckets[bucketId] = true;
+    this.render();
+  },
+  delete: function(event) {
+    var $target = $(event.target),
         bucketId = $target.parents('.bucket').attr('bucketId'),
-        bucket = this.model.get('buckets').get(bucketId),
-        curAmount = bucket.get('amount');
-
-    if ($target.hasClass('disabled')) {
-      return;
-    }
-
-    amount = Math.min(this.model.unallocatedAmount(), amount);
-    curAmount += amount;
-
-    bucket.set('amount', curAmount);
+        bucket = this.model.get('buckets').get(bucketId);
+    this.render();
+  },
+  saveBucket: function(event) {
+    event.preventDefault();
+    var $target = $(event.target),
+        bucketId = $target.find('[name=id]').val(),
+        bucket = this.model.get('buckets').get(bucketId);
+    bucket.set({
+      name: $target.find('[name=name]').val(),
+      description: $target.find('[name=description]').val()
+    });
     bucket.save();
+    delete this.editingBuckets[bucketId];
+  },
+  cancelEdit: function(event) {
+    event.preventDefault();
+    var $target = $(event.target),
+        bucketId = $target.parents('.edit-bucket-form').find('[name=id]').val();
+    delete this.editingBuckets[bucketId];
+    this.render();
   }
 });

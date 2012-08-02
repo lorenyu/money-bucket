@@ -12,33 +12,19 @@ block containerContents
       a.add-bucket.btn
         i.icon-plus
         |  Add Cubby
-    .btn-group
-      if mode == 'editing'
-        a.edit.btn.active
-          i.icon-pencil
-          |  Editing
-      else
-        a.edit.btn
-          i.icon-pencil
-          |  Edit
-      if mode == 'deleting'
-        a.delete.btn.active
-          i.icon-remove
-          |  Deleting
-      else
-        a.delete.btn
-          i.icon-remove
-          |  Delete
-  .row
-    for bucket in buckets
-      .bucket.span3(bucketId=bucket.id)
-        .well
-          h3.name= bucket.name
-          h4.amount $#{bucket.amount}
-          p
-            .input-prepend.input-append
-              .add-on $
-              button.add.btn(amount=1000) 1,000
-              button.add.btn(amount=100) 100
-              button.add.btn(amount=10) 10
-              button.add.btn(amount=1) 1
+  - for (var i = 0; i < buckets.length / 4; i++)
+    .row
+      for bucket in buckets.slice(4*i, 4*i + 4)
+        .span3
+          if editingBuckets[bucket.id]
+            include ../components/buckets/edit-bucket
+          else
+            .bucket(bucketId=bucket.id)
+              .well
+                .btn-toolbar
+                  .delete.btn.pull-right
+                    i.icon-remove
+                  .edit.btn.pull-right
+                    i.icon-pencil
+                h3.name= bucket.name
+                p.description= bucket.description

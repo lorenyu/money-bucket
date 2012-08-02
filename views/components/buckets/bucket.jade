@@ -1,0 +1,11 @@
+.bucket.span3(bucketId=bucket.id)
+  .well
+    h3.name= bucket.name
+    h4.amount $#{bucket.amount}
+    p
+      .input-prepend.input-append
+        .add-on $
+        button.btn(amount=1000) 1,000
+        button.btn(amount=100) 100
+        button.btn(amount=10) 10
+        button.btn(amount=1) 1
