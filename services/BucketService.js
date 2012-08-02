@@ -16,7 +16,9 @@ var BucketService = module.exports = {
   },
   getBucketsForUser: function(user, callback) {
     db.collection(Bucket.collectionName, function(err, collection) {
-      collection.find({ 'userId': user.id }).toArray(function(err, buckets) {
+      collection.find({ 'userId': user.id }, {
+          sort: [['_id', 'desc']]
+        }).toArray(function(err, buckets) {
         buckets = _.map(buckets, function(bucket) {
           bucket.id = bucket._id;
           return new Bucket(bucket);

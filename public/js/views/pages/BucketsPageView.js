@@ -23,6 +23,7 @@ MB.views.pages.BucketsPageView = Backbone.View.extend({
   },
   addBucket: function() {
     var bucket = this.model.get('buckets').create({}, {
+      at: 0,
       wait: true,
       success: _.bind(function(bucket) {
         this.editingBuckets[bucket.id] = true;
