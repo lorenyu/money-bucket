@@ -1,4 +1,4 @@
-extends ../page
+extends page
 
 block prepend nav
   activeItem = 'buckets'
@@ -7,27 +7,28 @@ block prepend nav
 block containerContents
   .page-header
     h1 My Cubbies
-  
-  .row
-    .span3
-      h3.available
-        | Total Available $
-        span.amount= user.amount
-    .span3
-      h3.allocated
-        | Allocated $
-        span.amount= allocatedAmount
-    .span3
-      h3.unallocated
-        | Unallocated $
-        span.amount= unallocatedAmount
-    .span3
-      .progress.progress-success
-        .bar
   .btn-toolbar
-    a.btn(href='#buckets/add')
-      i.icon-plus
-      |  Add Cubby
+    .btn-group
+      a.add-bucket.btn
+        i.icon-plus
+        |  Add Cubby
+    .btn-group
+      if mode == 'editing'
+        a.edit.btn.active
+          i.icon-pencil
+          |  Editing
+      else
+        a.edit.btn
+          i.icon-pencil
+          |  Edit
+      if mode == 'deleting'
+        a.delete.btn.active
+          i.icon-remove
+          |  Deleting
+      else
+        a.delete.btn
+          i.icon-remove
+          |  Delete
   .row
     for bucket in buckets
       .bucket.span3(bucketId=bucket.id)
