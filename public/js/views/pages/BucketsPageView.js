@@ -22,10 +22,13 @@ MB.views.pages.BucketsPageView = Backbone.View.extend({
     return this;
   },
   addBucket: function() {
-    MB.page = new MB.views.pages.BucketsPageView({
-      model: MB.user
+    var bucket = this.model.get('buckets').create({}, {
+      wait: true,
+      success: _.bind(function(bucket) {
+        this.editingBuckets[bucket.id] = true;
+        this.render();
+      }, this)
     });
-    
   },
   edit: function(event) {
     var $target = $(event.target),
@@ -37,6 +40,10 @@ MB.views.pages.BucketsPageView = Backbone.View.extend({
     var $target = $(event.target),
         bucketId = $target.parents('.bucket').attr('bucketId'),
         bucket = this.model.get('buckets').get(bucketId);
+    if (!confirm('Delete cubby: ' + bucket.get('name') + '?')) {
+      return;
+    }
+    bucket.destroy();
     this.render();
   },
   saveBucket: function(event) {
@@ -48,8 +55,8 @@ MB.views.pages.BucketsPageView = Backbone.View.extend({
       name: $target.find('[name=name]').val(),
       description: $target.find('[name=description]').val()
     });
-    bucket.save();
     delete this.editingBuckets[bucketId];
+    bucket.save();
   },
   cancelEdit: function(event) {
     event.preventDefault();
