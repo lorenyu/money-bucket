@@ -6,39 +6,20 @@ block prepend nav
 
 block containerContents
   .page-header
-    h1 Money Cubbies
+    h1 Home
   .row
-    if user.amount > 0 && buckets.length > 0
-      .span4
-        .hero-unit
-          h2 Withdraw
-          p Need money to spend? Withdraw money from the appropriate cubby.
-          a.btn.btn-large.btn-primary(href='#withdraw') Withdraw  
-    if buckets.length > 0
-      .span4
-        .hero-unit
-          h2 My Cubbies
-          p See how much money you have budgeted in each of your cubbies.
-          a.btn.btn-large.btn-primary(href='#buckets') My Cubbies
-    if user.amount > 0
-      .span4
-        .hero-unit
-          h2 Update Plan
-          p Enter how much money you have available.
-          form.form-inline.user-amount-form
-            .input-prepend
-              .add-on $
-              input.amount.input-small(type='text', placeholder=user.amount)
-            | 
-            .btn.btn-primary Start
-    else
-      .span4
-        .hero-unit
-          h2 Get Started
-          p Start with how much money you have available.
-          form.form-inline.user-amount-form
-            .input-prepend
-              .add-on $
-              input.amount.input-small(type='text', placeholder='0')
-            | 
-            button.btn.btn-primary(type='submit') Start
+    .span2
+      p.lead $#{user.amount} Total
+    .span2
+      p.lead $#{allocatedAmount} Allocated
+    .span2
+      p.lead $#{unallocatedAmount} Unallocated
+  - for (var i = 0; i < buckets.length / 4; i++)
+    .row
+      for bucket in buckets.slice(4*i, 4*i + 4)
+        .bucket.span3(bucketId=bucket.id)
+          .well
+            h3.name= bucket.name + ' '
+            p.amount.lead $#{bucket.amount}
+            h4
+              small.description= bucket.description
