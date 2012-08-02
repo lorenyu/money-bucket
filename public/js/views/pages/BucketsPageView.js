@@ -28,6 +28,7 @@ MB.views.pages.BucketsPageView = Backbone.View.extend({
       success: _.bind(function(bucket) {
         this.editingBuckets[bucket.id] = true;
         this.render();
+        $('input[name=id][value=' + bucket.id + ']').parents('form').find('[name=name]').focus();
       }, this)
     });
   },
