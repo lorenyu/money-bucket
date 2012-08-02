@@ -2,16 +2,19 @@ MB.namespace('views.pages');
 
 MB.views.pages.WithdrawPageView = Backbone.View.extend({
   events: {
-    'click .subtract': 'subtract',
-    'click .submit': 'withdraw'
+    'click .bucket .btn': 'subtract',
+    'submit .withdraw-form': 'withdraw'
   },
   withdrawAmount: 0,
   unsavedBuckets: {},
   initialize: function(options) {
+    this.model.on('change', _.bind(this.render, this));
     this.model.get('buckets').on('change', _.bind(this.render, this));
   },
   render: function() {
     this.$el.html(MB.render.pages.withdraw({
+      user: this.model.toJSON(),
+      allocatedAmount: this.model.allocatedAmount(),
       withdrawAmount: this.withdrawAmount,
       buckets: this.model.get('buckets').toJSON()
     }));
@@ -35,16 +38,17 @@ MB.views.pages.WithdrawPageView = Backbone.View.extend({
     bucket.set('amount', curAmount);
     this.unsavedBuckets[bucket.id] = bucket;
   },
-  withdraw: function() {
-    var withdrawAmount = parseInt($('.withdraw-amount').text()),
-        curUserAmount = this.model.get('amount');
-    curUserAmount -= withdrawAmount;
-    this.model.set('amount', curUserAmount);
+  withdraw: function(event) {
+    event.preventDefault();
+    var curUserAmount = this.model.get('amount');
+    
+    curUserAmount -= this.withdrawAmount;
+    this.withdrawAmount = 0;
 
+    this.model.set('amount', curUserAmount);
     _.each(this.unsavedBuckets, function(bucket, bucketId) {
       bucket.save();
     });
     this.model.save();
-    MB.router.go('');
   }
 });
