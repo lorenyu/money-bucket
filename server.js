@@ -102,25 +102,9 @@ app.param('bucketId', function(req, res, next, bucketId) {
 });
 
 app.get('/', function(req, res) {
-  if (req.session.user) {
-    services.BucketService.getBucketsForUser(req.session.user, function(err, buckets) {
-      if (err) {
-        console.error(err);
-        buckets = [];
-      }
-      res.render('pages/home', {
-        layout: 'layout',
-        user: new models.User(req.session.user),
-        buckets: buckets,
-        loggedIn: true
-      });
-      return;
-    });
-  } else {
-    res.render('pages/login', {
-      loggedIn: false
-    });
-  }
+  res.render('pages/login', {
+    loggedIn: false
+  });
 });
 
 
