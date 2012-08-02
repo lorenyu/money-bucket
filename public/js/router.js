@@ -3,7 +3,6 @@ MB.Router = Backbone.Router.extend({
   routes: {
     '':                           'home',
     'buckets':                    'buckets',
-    'buckets/add':                'addBucket',
     'deposit':                    'deposit',
     'withdraw':                   'withdraw'
   },
@@ -14,14 +13,6 @@ MB.Router = Backbone.Router.extend({
 
   home: function() {
     MB.page = new MB.views.pages.HomePageView({
-      model: MB.user
-    });
-    $('.root').html(MB.page.el);
-    MB.page.render();
-  },
-
-  addBucket: function() {
-    MB.page = new MB.views.pages.AddBucketPageView({
       model: MB.user
     });
     $('.root').html(MB.page.el);
