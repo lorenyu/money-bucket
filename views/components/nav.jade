@@ -8,8 +8,8 @@ if typeof(loggedIn) === 'undefined'
       a.brand(href='#') Money Cubbies
       if loggedIn
         .nav.btn-group
-          a.btn(href='#withdraw', class=(activeItem == 'withdraw' ? 'active' : '' )) Withdraw
-          a.btn(href='#deposit', class=(activeItem == 'deposit' ? 'active' : '' )) Deposit
+          a.btn(href='#withdraw', class=(activeItem == 'withdraw' ? 'active' : '' )) Spend
+          a.btn(href='#deposit', class=(activeItem == 'deposit' ? 'active' : '' )) Allocate
           a.btn(href='#buckets', class=(activeItem == 'buckets' ? 'active' : '' )) Manage Cubbies
       ul.nav.pull-right
         if loggedIn
