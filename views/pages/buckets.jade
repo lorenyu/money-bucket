@@ -13,20 +13,7 @@ block containerContents
       a.add-bucket.btn
         i.icon-plus
         |  Add Cubby
-  if buckets.length <= 0
-    .row
-      .span12
-        .alert.alert-info.alert-block
-          button.close(data-dismiss='alert') &times;
-          h3.alert-heading Adding Cubbies
-          p Click 
-            a.add-bucket.btn
-              i.icon-plus
-              |  Add Cubby
-            |  to add a cubby. Or start with some 
-            a.add-example-buckets.btn
-              i.icon-plus
-              |  example cubbies
+  .status-msg!= statusMsg
   .buckets
     - for (var i = 0; i < buckets.length / 4; i++)
       .row
