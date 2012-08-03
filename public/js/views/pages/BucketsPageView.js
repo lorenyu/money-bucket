@@ -12,16 +12,22 @@ MB.views.pages.BucketsPageView = Backbone.View.extend({
     'click .add-example-buckets': 'addExampleBuckets',
     'click .reset-buckets': 'resetBuckets',
   },
+  createdFirstBucket: false,
   editingBuckets: {},
   initialize: function(options) {
-    // this.model.get('buckets').on('reset', _.bind(this.render, this));
-    // this.model.get('buckets').on('change', _.bind(this.render, this));
+    this.createdFirstBucket = this.model.get('buckets').length <= 0;
   },
   render: function() {
     this.$el.html(MB.render.pages.buckets({
       buckets: this.model.get('buckets').toJSON(),
       editingBuckets: this.editingBuckets
     }));
+
+    // if this is the first bucket the user created
+    if (this.model.get('buckets').length > 0 && this.createdFirstBucket) { // TODO don't re-render the entire page, just re-render the buckets, so we don't have to keep setting this status message
+      $('.buckets').before('<div class="alert alert-info"><button class="close" data-dismiss="alert">&times;</button>You successfully created your first cubby. Go ahead and create a few more. When you are ready, click <a class="btn" href="#deposit">Allocate</a> to put money into your newly created cubbies.</div>');
+    }
+
     return this;
   },
   addBucket: function() {
@@ -30,6 +36,7 @@ MB.views.pages.BucketsPageView = Backbone.View.extend({
       wait: true,
       success: _.bind(function(bucket) {
         this.editingBuckets[bucket.id] = true;
+
         this.render();
         $('input[name=id][value=' + bucket.id + ']').parents('form').find('[name=name]').focus();
       }, this)
@@ -70,8 +77,9 @@ MB.views.pages.BucketsPageView = Backbone.View.extend({
         description: 'Nuff said.'
       }
     ]);
+    this.createdFirstBucket = false;
     this.render();
-    $('.buckets').before('<div class="alert alert-info"><button class="close" data-dismiss="alert">&times;</button>You are now ready to <a class="btn" href="#deposit">Allocate</a> money into your newly created cubbies. Or you can <button class="reset-buckets btn">Start Over</button> and create your own cubbies.</div>')
+    $('.buckets').before('<div class="alert alert-info"><button class="close" data-dismiss="alert">&times;</button>You are now ready to <a class="btn" href="#deposit">Allocate</a> money into your newly created cubbies. Or you can <button class="reset-buckets btn">Start Over</button> and create your own cubbies.</div>');
 
     this.model.get('buckets').invoke('save');
   },
@@ -114,6 +122,8 @@ MB.views.pages.BucketsPageView = Backbone.View.extend({
       description: $target.find('[name=description]').val()
     });
     delete this.editingBuckets[bucketId];
+    this.render();
+
     bucket.save();
   },
   cancelEdit: function(event) {
