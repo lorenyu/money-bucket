@@ -15,6 +15,15 @@ block containerContents
       p.lead $#{allocatedAmount} Allocated
     .span2
       p.lead $#{unallocatedAmount} Unallocated
+  if buckets.length <= 0
+    .row
+      .span12
+        .alert.alert-info.alert-block
+          button.close(data-dismiss='alert') &times;
+          h3.alert-heading Welcome
+          p This is your home, where you get a quick summary of the money in your cubbies. You don't have any cubbies yet, so let's start by adding some in the 
+            a.btn(href='#buckets') Manage Cubbies
+            |  section.
   - for (var i = 0; i < buckets.length / 4; i++)
     .row
       for bucket in buckets.slice(4*i, 4*i + 4)
