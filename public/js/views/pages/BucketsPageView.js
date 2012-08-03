@@ -6,13 +6,16 @@ MB.views.pages.BucketsPageView = Backbone.View.extend({
     'click .bucket .edit': 'edit',
     'click .bucket .delete': 'delete',
     'submit .edit-bucket-form': 'saveBucket',
-    'click .edit-bucket-form .cancel': 'cancelEdit'
+    'click .edit-bucket-form .cancel': 'cancelEdit',
+
+    //new user experience only (not used very often)
+    'click .add-example-buckets': 'addExampleBuckets',
+    'click .reset-buckets': 'resetBuckets',
   },
   editingBuckets: {},
   initialize: function(options) {
-    this.model.get('buckets').on('reset', _.bind(this.render, this));
-    this.model.get('buckets').on('sync', _.bind(this.render, this));
-    this.model.get('buckets').on('change', _.bind(this.render, this));
+    // this.model.get('buckets').on('reset', _.bind(this.render, this));
+    // this.model.get('buckets').on('change', _.bind(this.render, this));
   },
   render: function() {
     this.$el.html(MB.render.pages.buckets({
@@ -31,6 +34,59 @@ MB.views.pages.BucketsPageView = Backbone.View.extend({
         $('input[name=id][value=' + bucket.id + ']').parents('form').find('[name=name]').focus();
       }, this)
     });
+  },
+  addExampleBuckets: function() {
+    this.model.get('buckets').reset([
+      {
+        name: 'Rainy Day Money',
+        description: 'For emergencies only.'
+      },
+      {
+        name: 'Tuition Money',
+        description: 'It is never too late to learn.'
+      },
+      {
+        name: 'Trip to Paris',
+        description: 'The city of love'
+      },
+      {
+        name: 'Random Acts of Kindness',
+        description: 'For it is in giving that we receive.'
+      },
+      {
+        name: 'Groceries and Supplies',
+        description: 'The essentials.'
+      },
+      {
+        name: 'Eating out',
+        description: 'Dinner is served.'
+      },
+      {
+        name: 'Special Occasions',
+        description: 'Birthdays and weddings and holidays, oh my.'
+      },
+      {
+        name: 'Shopping',
+        description: 'Nuff said.'
+      }
+    ]);
+    this.render();
+    $('.buckets').before('<div class="alert alert-info"><button class="close" data-dismiss="alert">&times;</button>You are now ready to <a class="btn" href="#deposit">Allocate</a> money into your newly created cubbies. Or you can <button class="reset-buckets btn">Start Over</button> and create your own cubbies.</div>')
+
+    this.model.get('buckets').invoke('save');
+  },
+  resetBuckets: function() {
+    var buckets = this.model.get('buckets').toArray(),
+        bucket;
+    while (true) {
+      bucket = buckets.pop();
+      if (!bucket) {
+        break;
+      }
+      bucket.destroy();
+    }
+
+    this.render();
   },
   edit: function(event) {
     var $target = $(event.target),
