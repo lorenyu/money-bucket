@@ -81,7 +81,7 @@ MB.views.pages.DepositPageView = Backbone.View.extend({
     this.isAllocating = true;
 
     if (isFirstDeposit) {
-      this.statusMsg = '<div class="alert alert-info alert-block"><button data-dismiss="alert" class="close">×</button><h3 class="alert-heading">Allocating Money</h3><p>Click on the buttons within each cubby to allocate money to that cubby. It is better not to leave money unallocated or else you might be tempted to spend it in ways you did not plan.</p></div>';  
+      this.statusMsg = '<div class="alert alert-info alert-block"><button data-dismiss="alert" class="close">×</button><h3 class="alert-heading">Allocating Money</h3><p>Allocate all your money to give it a purpose. Then you can spend it with confidence that you are following your plans and principles. Click on the buttons within each cubby to allocate money to that cubby.</p></div>';  
     } else {
       this.statusMsg = '';
     }
