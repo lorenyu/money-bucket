@@ -10,7 +10,6 @@ MB.views.pages.DepositPageView = Backbone.View.extend({
   },
   curAllocatedAmount: 0,
   curUnallocatedAmount: 0,
-  isAllocating: false,
   initialize: function(options) {
     this.model.get('buckets').on('reset', _.bind(this.render, this));
     this.model.get('buckets').on('sync', _.bind(this.render, this));
@@ -32,7 +31,6 @@ MB.views.pages.DepositPageView = Backbone.View.extend({
       unallocatedAmount: this.model.unallocatedAmount(),
       curAllocatedAmount: this.curAllocatedAmount,
       curUnallocatedAmount: this.curUnallocatedAmount,
-      isAllocating: this.isAllocating,
       statusMsg: this.statusMsg
     }));
     return this;
@@ -58,7 +56,6 @@ MB.views.pages.DepositPageView = Backbone.View.extend({
     this.curAllocatedAmount += amount;
     bucket.set('amount', curAmount);
 
-    this.isAllocating = (this.model.unallocatedAmount() > 0);
 
     bucket.save();
 
@@ -78,7 +75,6 @@ MB.views.pages.DepositPageView = Backbone.View.extend({
     this.model.set('amount', userAmount + depositAmount);
     this.curAllocatedAmount = 0;
     this.curUnallocatedAmount = this.model.unallocatedAmount();
-    this.isAllocating = true;
 
     if (isFirstDeposit) {
       this.statusMsg = '<div class="alert alert-info alert-block"><button data-dismiss="alert" class="close">×</button><h3 class="alert-heading">Allocating Money</h3><p>Allocate all your money to give it a purpose. Then you can spend it with confidence that you are following your plans and principles. Click on the buttons within each cubby to allocate money to that cubby.</p></div>';  
