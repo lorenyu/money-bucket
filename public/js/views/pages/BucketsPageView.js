@@ -10,7 +10,7 @@ MB.views.pages.BucketsPageView = Backbone.View.extend({
 
     //new user experience only (not used very often)
     'click .add-example-buckets': 'addExampleBuckets',
-    'click .reset-buckets': 'resetBuckets',
+    'click .reset-buckets': 'resetBuckets'
   },
   isFirstTime: false,
   editingBuckets: {},

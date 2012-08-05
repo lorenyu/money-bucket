@@ -14,19 +14,19 @@ block containerContents
         .input-prepend.input-append
           .add-on $
           input.input-medium.deposit-amount(type='text', placeholder=0)
-          button.btn(type='submit') Deposit
+          button.btn(type='submit') Add Money
   .row
-    .span2
-      p.lead $#{user.amount} Total
-    .span2
-      p.lead $#{allocatedAmount} Allocated
-    .span2
-      p.lead $#{unallocatedAmount} Unallocated
-  if isAllocating
-    .row
-      .span12
-        .progress.progress-success
-          .bar
-  .row
-    for bucket in buckets
-      include ../components/buckets/bucket
+    .span3
+      p.lead $#{allocatedAmount} Allocated 
+    if unallocatedAmount > 0
+      .span3
+        p.lead $#{unallocatedAmount} Unallocated 
+          i.icon-warning-sign(rel='tooltip', title='You have unallocated money', data-content='Put a purpose to the rest of your money sooner to give yourself more confidence in your spending later.')
+        script
+          $('.icon-warning-sign').popover({ placement: 'top'});
+  .status-msg!= statusMsg
+  .buckets
+    - for (var i = 0; i < buckets.length / 4; i++)
+      .row
+        for bucket in buckets.slice(4*i, 4*i + 4)
+          include ../components/buckets/bucket
