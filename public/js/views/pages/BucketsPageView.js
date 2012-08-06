@@ -78,7 +78,6 @@ MB.views.pages.BucketsPageView = Backbone.View.extend({
       }
     ]);
     this.statusMsg = '<div class="alert alert-info"><button class="close" data-dismiss="alert">&times;</button>You are now ready to <a class="btn" href="#deposit">Allocate</a> money into your newly created cubbies. Or you can <button class="reset-buckets btn">Start Over</button> and create your own cubbies.</div>';
-    console.log(this.statusMsg);
     this.render();
 
     this.model.get('buckets').invoke('save');
