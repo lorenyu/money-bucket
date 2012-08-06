@@ -696,23 +696,23 @@
                 .bind( $.support.touch ? 'touchstart' : 'mousedown', touchStartHandler)
                 .trigger('orientationchange');
             
-            $(window).bind('hashchange', hashChangeHandler);
+            // $(window).bind('hashchange', hashChangeHandler);
 
-            var startHash = location.hash;
+            // var startHash = location.hash;
 
-            // Determine what the initial view should be
-            if ($('#jqt > .current').length === 0) {
-                $currentPage = $('#jqt > *:first-child').addClass('current');
-            } else {
-                $currentPage = $('#jqt > .current');
-            }
+            // // Determine what the initial view should be
+            // if ($('#jqt > .current').length === 0) {
+            //     $currentPage = $('#jqt > *:first-child').addClass('current');
+            // } else {
+            //     $currentPage = $('#jqt > .current');
+            // }
             
-            setHash($currentPage.attr('id'));
-            addPageToHistory($currentPage);
+            // setHash($currentPage.attr('id'));
+            // addPageToHistory($currentPage);
 
-            if ($(startHash).length === 1) {
-                goTo(startHash);
-            }
+            // if ($(startHash).length === 1) {
+            //     goTo(startHash);
+            // }
         });
 
         // Expose public methods and properties
