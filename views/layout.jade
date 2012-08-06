@@ -17,6 +17,8 @@ html
     script(src='/js/lib/backbone/backbone-min.js', type='text/javascript')
     script(src='/js/lib/bootstrap/bootstrap.min.js', type='text/javascript')
     script(src='/js/lib/jade/runtime.min.js', type='text/javascript')
+    script(src='/js/lib/jqtouch/jqtouch-jquery.min.js', type='text/javascript')
+    script(src='/js/lib/jqtouch/jqtouch.js', type='text/javascript')
 
   body
     #fb-root
@@ -58,6 +60,13 @@ html
             });
           }
         });
+    script
+      $.jQTouch({
+        formSelector: false,
+        slideSelector: false,
+        touchSelector: false,
+        useAnimations: false
+      });
     script
       (function() {
         var callbacks = [];
