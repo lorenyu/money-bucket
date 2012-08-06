@@ -3,6 +3,7 @@ MB.namespace('views.pages');
 MB.views.pages.WithdrawPageView = Backbone.View.extend({
   events: {
     'click .bucket .btn': 'subtract',
+    'tap .bucket .btn': 'subtract',
     'submit .withdraw-form': 'withdraw'
   },
   withdrawAmount: 0,
