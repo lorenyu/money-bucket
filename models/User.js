@@ -12,7 +12,8 @@ var User = module.exports = function(user) {
   user = _.pick(user,
     'id',
     'amount',
-    'facebookId');
+    'facebookId'
+  );
 
   // set default properties
   user = _.defaults(user, {

@@ -10,6 +10,7 @@ MB.views.pages.DepositPageView = Backbone.View.extend({
   },
   curAllocatedAmount: 0,
   curUnallocatedAmount: 0,
+  isFirstTime: 0,
   initialize: function(options) {
     this.model.get('buckets').on('reset', _.bind(this.render, this));
     this.model.get('buckets').on('sync', _.bind(this.render, this));
@@ -22,6 +23,8 @@ MB.views.pages.DepositPageView = Backbone.View.extend({
     if (this.model.get('amount') <= 0) {
       this.statusMsg = '<div class="alert alert-info alert-block"><button data-dismiss="alert" class="close">×</button><h3 class="alert-heading">Adding Money</h3><p>Enter how much money you want to add, then click <a class="deposit btn">Add Money</a>.</p></div>';
     }
+
+    this.isFirstTime = this.model.get('amount') <= 0 || this.model.allocatedAmount() <= 0;
   },
   render: function() {
     this.$el.html(MB.render.pages.deposit({
@@ -55,6 +58,12 @@ MB.views.pages.DepositPageView = Backbone.View.extend({
 
     this.curAllocatedAmount += amount;
     bucket.set('amount', curAmount);
+
+    if (this.isFirstTime && this.model.unallocatedAmount() <= 0) {
+      this.statusMsg = '<div class="alert alert-info alert-block"><button data-dismiss="alert" class="close">×</button><h3 class="alert-heading">Success</h3>You allocated all your money and are ready to <a href="#withdraw" class="btn">Spend</a> it when you need to.</p></div>';
+    } else {
+      this.statusMsg = ''
+    }
 
 
     bucket.save();
