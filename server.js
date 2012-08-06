@@ -102,9 +102,11 @@ app.param('bucketId', function(req, res, next, bucketId) {
 });
 
 app.get('/', function(req, res) {
-  res.render('pages/login', {
-    loggedIn: false
-  });
+  if (req.session.user) {
+    res.render('layout');
+  } else {
+    res.render('pages/login');
+  }
 });
 
 
