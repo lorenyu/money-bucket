@@ -3,12 +3,10 @@ MB.namespace('views.pages');
 MB.views.pages.DepositPageView = Backbone.View.extend({
   events: {
     'click .bucket .btn': 'add',
-    'tap .bucket .btn': 'add',
     'submit .deposit-form': 'deposit',
 
     //new user experience only (not used very often)
-    'click .deposit': 'deposit', // shows up in the status msg you see at the beginning if user.amount == 0
-    'tap .deposit': 'deposit'
+    'click .deposit': 'deposit' // shows up in the status msg you see at the beginning if user.amount == 0
   },
   curAllocatedAmount: 0,
   curUnallocatedAmount: 0,
