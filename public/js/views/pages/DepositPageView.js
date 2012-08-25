@@ -12,10 +12,10 @@ MB.views.pages.DepositPageView = Backbone.View.extend({
   curUnallocatedAmount: 0,
   isFirstTime: 0,
   initialize: function(options) {
-    this.model.get('buckets').on('reset', _.bind(this.render, this));
-    this.model.get('buckets').on('sync', _.bind(this.render, this));
-    this.model.get('buckets').on('change', _.bind(this.render, this));
-    this.model.on('change', _.bind(this.render, this));
+    // this.model.get('buckets').on('reset',this.render, this);
+    // this.model.get('buckets').on('sync', this.render, this);
+    // this.model.get('buckets').on('change', this.render, this);
+    this.model.on('change', this.render, this);
 
     this.curAllocatedAmount = 0;
     this.curUnallocatedAmount = this.model.unallocatedAmount();
@@ -36,6 +36,19 @@ MB.views.pages.DepositPageView = Backbone.View.extend({
       curUnallocatedAmount: this.curUnallocatedAmount,
       statusMsg: this.statusMsg
     }));
+
+    // create PrimitivePropertyView for each bucket to re-render that bucket when it changes
+    this.$el.find('.bucket').each(_.bind(function(index, bucketEl) {
+      var $bucketEl = $(bucketEl),
+          bucketId = $bucketEl.attr('bucketid'),
+          bucket = this.model.get('buckets').get(bucketId);
+      new MB.views.components.PrimitivePropertyView({
+        el: $bucketEl.find('.amount'),
+        model: bucket,
+        propertyName: 'amount'
+      });
+    }, this));
+
     return this;
   },
   add: function(event) {
@@ -67,8 +80,6 @@ MB.views.pages.DepositPageView = Backbone.View.extend({
 
 
     bucket.save();
-
-    this.render();
   },
   deposit: function(event) {
     event.preventDefault();
@@ -92,6 +103,5 @@ MB.views.pages.DepositPageView = Backbone.View.extend({
     }
 
     this.model.save();
-    this.render();
   }
 });
