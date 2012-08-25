@@ -11,10 +11,14 @@ block containerContents
   .row
     .span3
       form.withdraw-form
-        p.lead $#{withdrawAmount} 
+        p.withdraw-amount.lead $
+          span.amount= withdrawAmount
+          |  
           button.btn(type='submit') Spend
     .span3
-      p.lead $#{user.allocatedAmount} Available
+      p.allocated.lead $
+        span.amount= user.allocatedAmount
+        |  Available
   .row
     for bucket in buckets
       include ../components/buckets/bucket
