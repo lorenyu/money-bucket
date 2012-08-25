@@ -43,7 +43,7 @@ MB.Router = Backbone.Router.extend({
 
   withdraw: function() {
     MB.page = new MB.views.pages.WithdrawPageView({
-      model: new MB.models.Page({
+      model: new MB.models.WithdrawPage({
         user: MB.user
       })
     });
