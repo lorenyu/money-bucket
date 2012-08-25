@@ -8,17 +8,12 @@ MB.views.pages.DepositPageView = Backbone.View.extend({
     //new user experience only (not used very often)
     'click .deposit': 'deposit' // shows up in the status msg you see at the beginning if user.amount == 0
   },
-  curAllocatedAmount: 0,
-  curUnallocatedAmount: 0,
   isFirstTime: 0,
   initialize: function(options) {
     // this.model.get('buckets').on('reset',this.render, this);
     // this.model.get('buckets').on('sync', this.render, this);
     // this.model.get('buckets').on('change', this.render, this);
     this.model.on('change', this.render, this);
-
-    this.curAllocatedAmount = 0;
-    this.curUnallocatedAmount = this.model.unallocatedAmount();
 
     if (this.model.get('amount') <= 0) {
       this.statusMsg = '<div class="alert alert-info alert-block"><button data-dismiss="alert" class="close">×</button><h3 class="alert-heading">Adding Money</h3><p>Enter how much money you want to add, then click <a class="deposit btn">Add Money</a>.</p></div>';
@@ -32,8 +27,6 @@ MB.views.pages.DepositPageView = Backbone.View.extend({
       buckets: this.model.get('buckets').toJSON(),
       allocatedAmount: this.model.allocatedAmount(),
       unallocatedAmount: this.model.unallocatedAmount(),
-      curAllocatedAmount: this.curAllocatedAmount,
-      curUnallocatedAmount: this.curUnallocatedAmount,
       statusMsg: this.statusMsg
     }));
 
@@ -69,7 +62,6 @@ MB.views.pages.DepositPageView = Backbone.View.extend({
     amount = Math.min(this.model.unallocatedAmount(), amount);
     curAmount += amount;
 
-    this.curAllocatedAmount += amount;
     bucket.set('amount', curAmount);
 
     if (this.isFirstTime && this.model.unallocatedAmount() <= 0) {
@@ -93,8 +85,6 @@ MB.views.pages.DepositPageView = Backbone.View.extend({
     }
 
     this.model.set('amount', userAmount + depositAmount);
-    this.curAllocatedAmount = 0;
-    this.curUnallocatedAmount = this.model.unallocatedAmount();
 
     if (isFirstDeposit) {
       this.statusMsg = '<div class="alert alert-info alert-block"><button data-dismiss="alert" class="close">×</button><h3 class="alert-heading">Allocating Money</h3><p>Allocate all your money to give it a purpose. Then you can spend it with confidence that you are following your plans and principles. Click on the buttons within each cubby to allocate money to that cubby.</p></div>';  
