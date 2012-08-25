@@ -13,7 +13,9 @@ MB.Router = Backbone.Router.extend({
 
   home: function() {
     MB.page = new MB.views.pages.HomePageView({
-      model: MB.user
+      model: new MB.models.Page({
+        user: MB.user
+      })
     });
     $('.root').html(MB.page.el);
     MB.page.render();
@@ -21,7 +23,9 @@ MB.Router = Backbone.Router.extend({
 
   buckets: function() {
     MB.page = new MB.views.pages.BucketsPageView({
-      model: MB.user
+      model: new MB.models.Page({
+        user: MB.user
+      })
     });
     $('.root').html(MB.page.el);
     MB.page.render();
@@ -29,7 +33,9 @@ MB.Router = Backbone.Router.extend({
 
   deposit: function() {
     MB.page = new MB.views.pages.DepositPageView({
-      model: MB.user
+      model: new MB.models.Page({
+        user: MB.user
+      })
     });
     $('.root').html(MB.page.el);
     MB.page.render();
@@ -37,7 +43,9 @@ MB.Router = Backbone.Router.extend({
 
   withdraw: function() {
     MB.page = new MB.views.pages.WithdrawPageView({
-      model: MB.user
+      model: new MB.models.Page({
+        user: MB.user
+      })
     });
     $('.root').html(MB.page.el);
     MB.page.render();

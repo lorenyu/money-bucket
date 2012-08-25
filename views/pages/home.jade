@@ -12,9 +12,9 @@ block containerContents
     .span2
       p.lead $#{user.amount} Total
     .span2
-      p.lead $#{allocatedAmount} Allocated
+      p.lead $#{user.allocatedAmount} Allocated
     .span2
-      p.lead $#{unallocatedAmount} Unallocated
+      p.lead $#{user.unallocatedAmount} Unallocated
   if buckets.length <= 0
     .row
       .span12

@@ -1,7 +1,8 @@
 .bucket.span3(bucketId=bucket.id)
   .well
     h3.name= bucket.name
-    p.amount.lead $#{bucket.amount}
+    p.lead $
+        span.amount= bucket.amount
     p
       .input-prepend.input-append
         .add-on $

@@ -7,15 +7,14 @@ MB.views.pages.WithdrawPageView = Backbone.View.extend({
   },
   withdrawAmount: 0,
   initialize: function(options) {
-    this.model.on('change', _.bind(this.render, this));
-    this.model.get('buckets').on('change', _.bind(this.render, this));
+    this.model.get('user').on('change', _.bind(this.render, this));
+    this.model.get('user').get('buckets').on('change', _.bind(this.render, this));
   },
   render: function() {
     this.$el.html(MB.render.pages.withdraw({
-      user: this.model.toJSON(),
-      allocatedAmount: this.model.allocatedAmount(),
+      user: this.model.get('user').toJSON(),
       withdrawAmount: this.withdrawAmount,
-      buckets: this.model.get('buckets').toJSON()
+      buckets: this.model.get('user').get('buckets').toJSON()
     }));
     return this;
   },
@@ -23,7 +22,7 @@ MB.views.pages.WithdrawPageView = Backbone.View.extend({
     var $target = $(event.target),
         amount = parseInt($target.attr('amount')),
         bucketId = $target.parents('.bucket').attr('bucketId'),
-        bucket = this.model.get('buckets').get(bucketId),
+        bucket = this.model.get('user').get('buckets').get(bucketId),
         curAmount = bucket.get('amount');
 
     if ($target.hasClass('disabled')) {
@@ -39,12 +38,12 @@ MB.views.pages.WithdrawPageView = Backbone.View.extend({
   },
   withdraw: function(event) {
     event.preventDefault();
-    var curUserAmount = this.model.get('amount');
+    var curUserAmount = this.model.get('user').get('amount');
     
     curUserAmount -= this.withdrawAmount;
     this.withdrawAmount = 0;
 
-    this.model.set('amount', curUserAmount);
-    this.model.save();
+    this.model.get('user').set('amount', curUserAmount);
+    this.model.get('user').save();
   }
 });
