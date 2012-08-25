@@ -17,10 +17,14 @@ block containerContents
           button.btn(type='submit') Add Money
   .row
     .span3
-      p.lead $#{allocatedAmount} Allocated 
-    if unallocatedAmount > 0
+      p.allocated.lead $
+        span.amount= user.allocatedAmount
+        |  Allocated 
+    if user.unallocatedAmount > 0
       .span3
-        p.lead $#{unallocatedAmount} Unallocated 
+        p.unallocated.lead $
+          span.amount= user.unallocatedAmount
+          |  Unallocated 
           i.icon-warning-sign(rel='tooltip', title='You have unallocated money', data-content='Put a purpose to the rest of your money sooner to give yourself more confidence in your spending later.')
         script
           $('.icon-warning-sign').popover({ placement: 'top'});

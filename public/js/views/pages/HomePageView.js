@@ -11,9 +11,7 @@ MB.views.pages.HomePageView = Backbone.View.extend({
   render: function() {
     this.$el.html(MB.render.pages.home({
       user: this.model.toJSON(),
-      buckets: this.model.get('buckets').toJSON(),
-      allocatedAmount: this.model.allocatedAmount(),
-      unallocatedAmount: this.model.unallocatedAmount()
+      buckets: this.model.get('buckets').toJSON()
     }));
     return this;
   },

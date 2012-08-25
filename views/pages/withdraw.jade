@@ -14,7 +14,7 @@ block containerContents
         p.lead $#{withdrawAmount} 
           button.btn(type='submit') Spend
     .span3
-      p.lead $#{allocatedAmount} Available
+      p.lead $#{user.allocatedAmount} Available
   .row
     for bucket in buckets
       include ../components/buckets/bucket

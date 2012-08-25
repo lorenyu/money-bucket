@@ -13,20 +13,18 @@ MB.views.pages.DepositPageView = Backbone.View.extend({
     // this.model.get('buckets').on('reset',this.render, this);
     // this.model.get('buckets').on('sync', this.render, this);
     // this.model.get('buckets').on('change', this.render, this);
-    this.model.on('change', this.render, this);
+    // this.model.on('change', this.render, this);
 
     if (this.model.get('amount') <= 0) {
       this.statusMsg = '<div class="alert alert-info alert-block"><button data-dismiss="alert" class="close">×</button><h3 class="alert-heading">Adding Money</h3><p>Enter how much money you want to add, then click <a class="deposit btn">Add Money</a>.</p></div>';
     }
 
-    this.isFirstTime = this.model.get('amount') <= 0 || this.model.allocatedAmount() <= 0;
+    this.isFirstTime = this.model.get('amount') <= 0 || this.model.get('allocatedAmount') <= 0;
   },
   render: function() {
     this.$el.html(MB.render.pages.deposit({
       user: this.model.toJSON(),
       buckets: this.model.get('buckets').toJSON(),
-      allocatedAmount: this.model.allocatedAmount(),
-      unallocatedAmount: this.model.unallocatedAmount(),
       statusMsg: this.statusMsg
     }));
 
@@ -42,6 +40,18 @@ MB.views.pages.DepositPageView = Backbone.View.extend({
       });
     }, this));
 
+    // create PrimitivePropertyView for the allocated and unallocated amounts
+    new MB.views.components.PrimitivePropertyView({
+      el: this.$el.find('.allocated .amount'),
+      model: this.model,
+      propertyName: 'allocatedAmount'
+    });
+    new MB.views.components.PrimitivePropertyView({
+      el: this.$el.find('.unallocated .amount'),
+      model: this.model,
+      propertyName: 'unallocatedAmount'
+    });
+
     return this;
   },
   add: function(event) {
@@ -55,16 +65,16 @@ MB.views.pages.DepositPageView = Backbone.View.extend({
       return;
     }
 
-    if (this.model.unallocatedAmount() <= 0) {
+    if (this.model.get('unallocatedAmount') <= 0) {
       this.statusMsg = '<div class="alert alert-info alert-block"><button data-dismiss="alert" class="close">×</button><a class="deposit btn">Add money</a> to allocate.</p></div>';
     }
 
-    amount = Math.min(this.model.unallocatedAmount(), amount);
+    amount = Math.min(this.model.get('unallocatedAmount'), amount);
     curAmount += amount;
 
     bucket.set('amount', curAmount);
 
-    if (this.isFirstTime && this.model.unallocatedAmount() <= 0) {
+    if (this.isFirstTime && this.model.get('unallocatedAmount') <= 0) {
       this.statusMsg = '<div class="alert alert-info alert-block"><button data-dismiss="alert" class="close">×</button><h3 class="alert-heading">Success</h3>You allocated all your money and are ready to <a href="#withdraw" class="btn">Spend</a> it when you need to.</p></div>';
     } else {
       this.statusMsg = ''

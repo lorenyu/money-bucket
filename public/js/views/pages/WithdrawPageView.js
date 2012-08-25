@@ -13,7 +13,6 @@ MB.views.pages.WithdrawPageView = Backbone.View.extend({
   render: function() {
     this.$el.html(MB.render.pages.withdraw({
       user: this.model.toJSON(),
-      allocatedAmount: this.model.allocatedAmount(),
       withdrawAmount: this.withdrawAmount,
       buckets: this.model.get('buckets').toJSON()
     }));
