@@ -1,13 +1,19 @@
 MB.namespace('views.components');
 
 MB.views.components.PrimitivePropertyView = Backbone.View.extend({
-  propertyName: 'id',
+
+  defaults: {
+    propertyName: 'id'
+  },
+
   initialize: function(options) {
-    this.propertyName = options.propertyName;
-    this.model.on('change:' + this.propertyName, this.render, this);
+    this.options = options || {};
+    _.defaults(this.options, this.defaults);
+
+    this.model.on('change:' + this.options.propertyName, this.render, this);
   },
   render: function() {
-    this.$el.html(this.model.get(this.propertyName));
+    this.$el.html(this.model.get(this.options.propertyName));
     return this;
   }
 });

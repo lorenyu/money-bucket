@@ -20,12 +20,11 @@ block containerContents
       p.allocated.lead $
         span.amount= user.allocatedAmount
         |  Allocated 
-    if user.unallocatedAmount > 0
-      .span3
-        p.unallocated.lead $
-          span.amount= user.unallocatedAmount
-          |  Unallocated 
-          i.icon-warning-sign(rel='tooltip', title='You have unallocated money', data-content='Put a purpose to the rest of your money sooner to give yourself more confidence in your spending later.')
+    .span3
+      p.unallocated.lead(style=(user.unallocatedAmount <= 0 ? 'display:none;' : '') ) $
+        span.amount= user.unallocatedAmount
+        |  Unallocated 
+        i.icon-warning-sign(rel='tooltip', title='You have unallocated money', data-content='Put a purpose to the rest of your money sooner to give yourself more confidence in your spending later.')
         script
           $('.icon-warning-sign').popover({ placement: 'top'});
   .status-msg!= statusMsg
