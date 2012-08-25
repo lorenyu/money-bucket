@@ -12,6 +12,7 @@ MB.models.User = Backbone.Model.extend({
   urlRoot: '/api/users',
   initialize: function(attributes) {
     this.get('buckets').on('reset', function(buckets, options) {
+      this._updateAllocatedAmount();
       buckets.each(function(bucket) {
         bucket.on('change:amount', this._updateAllocatedAmount, this);
       }, this);
@@ -19,17 +20,15 @@ MB.models.User = Backbone.Model.extend({
 
     this.on('change:amount', this._updateUnallocatedAmount, this);
 
-    this.
-      _updateAllocatedAmount().
-      _updateUnallocatedAmount();
+    this._updateAllocatedAmount();
   },
   _updateAllocatedAmount: function() {
-    console.log('_updateAllocatedAmount');
     var allocatedAmount = this.get('buckets').totalAmount();
     if (this.get('allocatedAmount') === allocatedAmount) {
       return this;
     }
     this.set('allocatedAmount', allocatedAmount);
+    this._updateUnallocatedAmount();
     return this;
   },
   _updateUnallocatedAmount: function() {
