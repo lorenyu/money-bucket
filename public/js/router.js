@@ -4,7 +4,8 @@ MB.Router = Backbone.Router.extend({
     '':                           'home',
     'buckets':                    'buckets',
     'deposit':                    'deposit',
-    'withdraw':                   'withdraw'
+    'withdraw':                   'withdraw',
+    'feedback':                   'feedback'
   },
 
   go: function(routeName) {
@@ -44,6 +45,16 @@ MB.Router = Backbone.Router.extend({
   withdraw: function() {
     MB.page = new MB.views.pages.WithdrawPageView({
       model: new MB.models.WithdrawPage({
+        user: MB.user
+      })
+    });
+    $('.root').html(MB.page.el);
+    MB.page.render();
+  },
+
+  feedback: function() {
+    MB.page = new MB.views.pages.FeedbackPageView({
+      model: new MB.models.Page({
         user: MB.user
       })
     });
