@@ -1,0 +1,18 @@
+extends page
+
+block prepend nav
+  loggedIn = true
+
+block containerContents
+  .page-header
+    h1 Feedback 
+      small Help us help you.
+  .row
+    .span12
+      .alert.alert-info Give feedback on Money Cubbies. Tell us what works well, and what could be better.
+    .span12.
+      <fb:comments href="http://moneycubbies.com" width="470"></fb:comments>
+    script
+      MB.facebook(function() {
+        FB.XFBML.parse();
+      });
