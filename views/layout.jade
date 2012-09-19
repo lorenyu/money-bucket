@@ -31,6 +31,11 @@ html
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
 
+    //- ClickTale Top part
+    script
+      var WRInitTime=(new Date()).getTime();
+
+
   body
     #fb-root
     .root
@@ -115,3 +120,9 @@ html
            ref.parentNode.insertBefore(js, ref);
         })(document);
       })();
+
+    //- ClickTale Bottom part
+    #ClickTaleDiv(style="display: none;")
+    script
+      document.write(unescape("%3Cscript%20src='http://s.clicktale.net/WRd.js'%20type='text/javascript'%3E%3C/script%3E"));
+      if(typeof ClickTale=='function') ClickTale(4083,1,"www14");
