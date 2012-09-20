@@ -102,11 +102,7 @@ app.param('bucketId', function(req, res, next, bucketId) {
 });
 
 app.get('/', function(req, res) {
-  if (req.session.user) {
-    res.render('layout');
-  } else {
-    res.render('pages/login');
-  }
+  res.render('layout');
 });
 
 
@@ -170,7 +166,7 @@ app.post('/api/auth/login', function(req, res) {
     req.session.user = user;
     console.log('Logged in as user ' + user.id);
     console.log(typeof user.id);
-    res.json({ success: true, statusMsg: 'Logged in.'});
+    res.json({ success: true, statusMsg: 'Logged in.', user: user});
   });
 });
 app.post('/api/auth/logout', function(req, res) {

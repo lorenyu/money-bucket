@@ -1,12 +1,12 @@
 MB.namespace('auth');
 
-MB.auth.promptUserForLogin = function() {
+MB.auth.promptUserForLogin = function(callback) {
 
   var onFacebookLogin = function(authResponse) {
     MB.auth.login({
       facebookId: authResponse.userID,
       accessToken: authResponse.accessToken
-    });
+    }, callback);
   };
 
   MB.facebook(function() {
@@ -26,7 +26,7 @@ MB.auth.promptUserForLogin = function() {
   });
 };
 
-MB.auth.login = function(credentials) {
+MB.auth.login = function(credentials, callback) {
   $.ajax({
     type: 'POST',
     url: '/api/auth/login',
@@ -34,18 +34,14 @@ MB.auth.login = function(credentials) {
       credentials: credentials
     },
     dataType: 'json',
-    success: function() {
-      window.location.reload();
-    }
+    success: callback
   });
 };
 
-MB.auth.logout = function() {
+MB.auth.logout = function(callback) {
   $.ajax({
     type: 'POST',
     url: '/api/auth/logout',
-    success: function() {
-      window.location.reload();
-    }
+    success: callback
   });
 };
