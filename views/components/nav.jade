@@ -14,6 +14,7 @@ if typeof(loggedIn) === 'undefined'
       ul.nav.pull-right
         if loggedIn
           button.logout.btn Logout
+          //- TODO: refactor
           script
             $(document).ready(function(){
               $('.logout').click(function() {

@@ -2,6 +2,7 @@ MB.namespace('views.pages');
 
 MB.views.pages.LoginPageView = Backbone.View.extend({
   events: {
+    // TODO: the header .login should be in a more general place not just LoginPageView
     'click .login': 'login'
   },
   initialize: function(options) {
