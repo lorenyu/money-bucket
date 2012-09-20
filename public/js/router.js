@@ -78,15 +78,11 @@ MB.Router = Backbone.Router.extend({
   },
 
   feedback: function() {
-    this.requireLogin(_.bind(function() {
-      MB.page = new MB.views.pages.FeedbackPageView({
-        model: new MB.models.Page({
-          user: MB.user
-        })
-      });
-      $('.root').html(MB.page.el);
-      MB.page.render();
-    }, this));
+    MB.page = new MB.views.pages.FeedbackPageView({
+      model: new MB.models.Page({})
+    });
+    $('.root').html(MB.page.el);
+    MB.page.render();
   }
 
 });
