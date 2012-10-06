@@ -25,7 +25,8 @@ MB.views.pages.BucketsPageView = Backbone.View.extend({
     this.$el.html(MB.render.pages.buckets({
       buckets: this.model.get('user').get('buckets').toJSON(),
       editingBuckets: this.editingBuckets,
-      statusMsg: this.statusMsg
+      statusMsg: this.statusMsg,
+      loggedIn: MB.isLoggedIn
     }));
 
     return this;

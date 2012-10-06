@@ -71,6 +71,7 @@ html
         MB.user = new MB.models.User({
           id: '#{session.user.id}'
         });
+        MB.isLoggedIn = true;
         MB.user.fetch({
           success: function() {
             MB.user.get('buckets').fetch({
@@ -83,8 +84,19 @@ html
         });
     else
       script
-        MB.router = new MB.Router();
-        Backbone.history.start();
+        (function() {
+          MB.user = new MB.models.User({});
+          MB.user.set('buckets', new MB.models.BucketCollection());
+          MB.isLoggedIn = false;
+          _sync = Backbone.sync;
+          Backbone.sync = function(method, model, options) {
+            if (MB.isLoggedIn) {
+              _sync(method, model, options);
+            }
+          };
+          MB.router = new MB.Router();
+          Backbone.history.start();
+        })();
 
     script
       $.jQTouch({

@@ -20,7 +20,8 @@ MB.views.pages.DepositPageView = Backbone.View.extend({
     this.$el.html(MB.render.pages.deposit({
       user: this.model.get('user').toJSON(),
       buckets: this.model.get('user').get('buckets').toJSON(),
-      statusMsg: this.model.get('statusMsg')
+      statusMsg: this.model.get('statusMsg'),
+      loggedIn: MB.isLoggedIn
     }));
 
     this.model.get('user').on('change:unallocatedAmount', function(model, options) {

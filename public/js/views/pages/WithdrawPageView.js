@@ -12,7 +12,8 @@ MB.views.pages.WithdrawPageView = Backbone.View.extend({
     this.$el.html(MB.render.pages.withdraw({
       user: this.model.get('user').toJSON(),
       withdrawAmount: this.model.get('withdrawAmount'),
-      buckets: this.model.get('user').get('buckets').toJSON()
+      buckets: this.model.get('user').get('buckets').toJSON(),
+      loggedIn: MB.isLoggedIn
     }));
 
     // create PrimitivePropertyView for each bucket to re-render that bucket when it changes
