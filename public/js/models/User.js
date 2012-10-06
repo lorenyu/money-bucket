@@ -11,11 +11,21 @@ MB.models.User = Backbone.Model.extend({
   },
   urlRoot: '/api/users',
   initialize: function(attributes) {
-    this.get('buckets').on('reset', function(buckets, options) {
+    this.get('buckets').on('reset', function(buckets) {
       this._updateAllocatedAmount();
-      buckets.each(function(bucket) {
+      this._updateUnallocatedAmount();
+
+      this.get('buckets').each(function(bucket) {
         bucket.on('change:amount', this._updateAllocatedAmount, this);
       }, this);
+    }, this);
+
+    this.get('buckets').each(function(bucket) {
+      bucket.on('change:amount', this._updateAllocatedAmount, this);
+    }, this);
+
+    this.get('buckets').on('add', function(bucket) {
+      bucket.on('change:amount', this._updateAllocatedAmount, this);
     }, this);
 
     this.on('change:amount', this._updateUnallocatedAmount, this);

@@ -6,11 +6,10 @@ if typeof(loggedIn) === 'undefined'
   .navbar-inner
     .container
       a.brand(href='#') Money Cubbies
-      if loggedIn
-        .nav.btn-group
-          a.btn(href='#withdraw', class=(activeItem == 'withdraw' ? 'active' : '' )) Spend
-          a.btn(href='#deposit', class=(activeItem == 'deposit' ? 'active' : '' )) Allocate
-          a.btn(href='#buckets', class=(activeItem == 'buckets' ? 'active' : '' )) Manage Cubbies
+      .nav.btn-group
+        a.btn(href='#withdraw', class=(activeItem == 'withdraw' ? 'active' : '' )) Spend
+        a.btn(href='#deposit', class=(activeItem == 'deposit' ? 'active' : '' )) Allocate
+        a.btn(href='#buckets', class=(activeItem == 'buckets' ? 'active' : '' )) Manage Cubbies
       ul.nav.pull-right
         if loggedIn
           button.logout.btn Logout
@@ -19,6 +18,7 @@ if typeof(loggedIn) === 'undefined'
             $(document).ready(function(){
               $('.logout').click(function() {
                 MB.user = null;
+                MB.isLoggedIn = false;
                 MB.auth.logout(function() {
                   // backbone's equivalent to refresh
                   Backbone.history.loadUrl(window.location.hash);
@@ -27,3 +27,30 @@ if typeof(loggedIn) === 'undefined'
             });
         else
           button.login.btn Login
+          script
+            $(document).ready(function(){
+              $('.login').click(function() {
+                MB.auth.promptUserForLogin(function(data) {
+                  console.log(data);
+                  MB.isLoggedIn = true;
+                  if (data.isNewUser) {
+                    MB.user.set('id', data.user.id);
+                    MB.user.save();
+                    // save in reverse order because on server things are added reverse chronologically
+                    for (var i = MB.user.get('buckets').length - 1; i >= 0; i--) {
+                      MB.user.get('buckets').at(i).save();
+                    }
+                    // backbone's equivalent to refresh
+                    Backbone.history.loadUrl(window.location.hash);
+                  } else {
+                    MB.user = new MB.models.User(data.user);
+                    MB.user.get('buckets').fetch({
+                      success: function() {
+                        // backbone's equivalent to refresh
+                        Backbone.history.loadUrl(window.location.hash);
+                      }
+                    });
+                  }
+                });
+              });
+            });

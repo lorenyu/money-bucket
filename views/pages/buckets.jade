@@ -2,7 +2,6 @@ extends page
 
 block prepend nav
   activeItem = 'buckets'
-  loggedIn = true
 
 block containerContents
   .page-header
@@ -19,10 +18,10 @@ block containerContents
       .row
         for bucket in buckets.slice(4*i, 4*i + 4)
           .span3
-            if editingBuckets[bucket.id]
+            if editingBuckets[bucket.cid]
               include ../components/buckets/edit-bucket
             else
-              .bucket(bucketId=bucket.id)
+              .bucket(bucketId=bucket.cid)
                 .well
                   .btn-toolbar
                     .delete.btn.pull-right

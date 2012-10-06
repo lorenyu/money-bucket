@@ -12,14 +12,15 @@ MB.views.pages.WithdrawPageView = Backbone.View.extend({
     this.$el.html(MB.render.pages.withdraw({
       user: this.model.get('user').toJSON(),
       withdrawAmount: this.model.get('withdrawAmount'),
-      buckets: this.model.get('user').get('buckets').toJSON()
+      buckets: this.model.get('user').get('buckets').toJSON(),
+      loggedIn: MB.isLoggedIn
     }));
 
     // create PrimitivePropertyView for each bucket to re-render that bucket when it changes
     this.$el.find('.bucket').each(_.bind(function(index, bucketEl) {
       var $bucketEl = $(bucketEl),
           bucketId = $bucketEl.attr('bucketid'),
-          bucket = this.model.get('user').get('buckets').get(bucketId);
+          bucket = this.model.get('user').get('buckets').getByCid(bucketId);
       new MB.views.components.PrimitivePropertyView({
         el: $bucketEl.find('.amount'),
         model: bucket,
@@ -44,7 +45,7 @@ MB.views.pages.WithdrawPageView = Backbone.View.extend({
     var $target = $(event.target),
         amount = parseInt($target.attr('amount')),
         bucketId = $target.parents('.bucket').attr('bucketId'),
-        bucket = this.model.get('user').get('buckets').get(bucketId),
+        bucket = this.model.get('user').get('buckets').getByCid(bucketId),
         curAmount = bucket.get('amount');
 
     if ($target.hasClass('disabled')) {

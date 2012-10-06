@@ -25,22 +25,20 @@ MB.views.pages.BucketsPageView = Backbone.View.extend({
     this.$el.html(MB.render.pages.buckets({
       buckets: this.model.get('user').get('buckets').toJSON(),
       editingBuckets: this.editingBuckets,
-      statusMsg: this.statusMsg
+      statusMsg: this.statusMsg,
+      loggedIn: MB.isLoggedIn
     }));
 
     return this;
   },
   addBucket: function() {
-    var bucket = this.model.get('user').get('buckets').create({}, {
-      at: 0,
-      wait: true,
-      success: _.bind(function(bucket) {
-        this.editingBuckets[bucket.id] = true;
-
-        this.render();
-        $('input[name=id][value=' + bucket.id + ']').parents('form').find('[name=name]').focus();
-      }, this)
+    var bucket = new MB.models.Bucket({});
+    bucket.save();
+    this.model.get('user').get('buckets').add(bucket, {
+      at: 0
     });
+    this.render();
+    $('input[name=id][value=' + bucket.cid + ']').parents('form').find('[name=name]').focus();
   },
   addExampleBuckets: function() {
     this.model.get('user').get('buckets').reset([
@@ -104,7 +102,7 @@ MB.views.pages.BucketsPageView = Backbone.View.extend({
   delete: function(event) {
     var $target = $(event.target),
         bucketId = $target.parents('.bucket').attr('bucketId'),
-        bucket = this.model.get('user').get('buckets').get(bucketId);
+        bucket = this.model.get('user').get('buckets').getByCid(bucketId);
     if (!confirm('Delete cubby: ' + bucket.get('name') + '?')) {
       return;
     }
@@ -115,7 +113,7 @@ MB.views.pages.BucketsPageView = Backbone.View.extend({
     event.preventDefault();
     var $target = $(event.target),
         bucketId = $target.find('[name=id]').val(),
-        bucket = this.model.get('user').get('buckets').get(bucketId);
+        bucket = this.model.get('user').get('buckets').getByCid(bucketId);
     bucket.set({
       name: $target.find('[name=name]').val(),
       description: $target.find('[name=description]').val()

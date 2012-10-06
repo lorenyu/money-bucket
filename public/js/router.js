@@ -1,8 +1,9 @@
 MB.Router = Backbone.Router.extend({
 
   routes: {
-    '':                           'home',
+    '':                           'login',
     'login':                      'login',
+    'home':                       'home',
     'buckets':                    'buckets',
     'deposit':                    'deposit',
     'withdraw':                   'withdraw',
@@ -14,14 +15,18 @@ MB.Router = Backbone.Router.extend({
   },
 
   requireLogin: function(callback) {
-    if (!MB.user) {
-      this.login();
-      return;
-    }
+    // if (!MB.user) {
+    //   this.login();
+    //   return;
+    // }
     callback();
   },
 
   login: function() {
+    if (MB.isLoggedIn) {
+      this.home();
+      return;
+    }
     MB.page = new MB.views.pages.LoginPageView({
       model: new MB.models.Page({})
     });

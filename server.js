@@ -154,17 +154,17 @@ app.post('/api/auth/login', function(req, res) {
           services.UserService.saveUser(user, function(err, user) {
             if (err) return callback('Error saving user');
 
-            callback(null, user);
+            callback(null, user, true);
           });
           return;
         }
 
-        callback(null, user);
+        callback(null, user, false);
       });
     }
   ],
   // save the user in the session or return an error message if something failed along the way
-  function(err, user) {
+  function(err, user, isNewUser) {
     if (err) {
       console.error(err);
       res.json({ success: false, statusMsg: err });
@@ -173,8 +173,7 @@ app.post('/api/auth/login', function(req, res) {
 
     req.session.user = user;
     console.log('Logged in as user ' + user.id);
-    console.log(typeof user.id);
-    res.json({ success: true, statusMsg: 'Logged in.', user: user});
+    res.json({ success: true, statusMsg: 'Logged in.', user: user, isNewUser: isNewUser});
   });
 });
 app.post('/api/auth/logout', function(req, res) {
