@@ -11,7 +11,7 @@ var db = module.exports = {
     }
 
     _db.open(function(err, conn) {
-      if (err) return;
+      if (err) return callback(err);
       _conn = conn;
       return callback(null, _conn);
     });
