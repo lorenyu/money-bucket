@@ -36,7 +36,7 @@ MB.views.pages.DepositPageView = Backbone.View.extend({
     this.$el.find('.bucket').each(_.bind(function(index, bucketEl) {
       var $bucketEl = $(bucketEl),
           bucketId = $bucketEl.attr('bucketid'),
-          bucket = this.model.get('user').get('buckets').get(bucketId);
+          bucket = this.model.get('user').get('buckets').getByCid(bucketId);
       new MB.views.components.PrimitivePropertyView({
         el: $bucketEl.find('.amount'),
         model: bucket,
@@ -67,7 +67,7 @@ MB.views.pages.DepositPageView = Backbone.View.extend({
     var $target = $(event.target),
         amount = parseInt($target.attr('amount')),
         bucketId = $target.parents('.bucket').attr('bucketId'),
-        bucket = this.model.get('user').get('buckets').get(bucketId),
+        bucket = this.model.get('user').get('buckets').getByCid(bucketId),
         curAmount = bucket.get('amount');
 
     if ($target.hasClass('disabled')) {

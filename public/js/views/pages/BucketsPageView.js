@@ -102,7 +102,7 @@ MB.views.pages.BucketsPageView = Backbone.View.extend({
   delete: function(event) {
     var $target = $(event.target),
         bucketId = $target.parents('.bucket').attr('bucketId'),
-        bucket = this.model.get('user').get('buckets').get(bucketId);
+        bucket = this.model.get('user').get('buckets').getByCid(bucketId);
     if (!confirm('Delete cubby: ' + bucket.get('name') + '?')) {
       return;
     }
@@ -113,7 +113,7 @@ MB.views.pages.BucketsPageView = Backbone.View.extend({
     event.preventDefault();
     var $target = $(event.target),
         bucketId = $target.find('[name=id]').val(),
-        bucket = this.model.get('user').get('buckets').get(bucketId);
+        bucket = this.model.get('user').get('buckets').getByCid(bucketId);
     bucket.set({
       name: $target.find('[name=name]').val(),
       description: $target.find('[name=description]').val()
