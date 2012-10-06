@@ -86,7 +86,6 @@ html
       script
         (function() {
           MB.user = new MB.models.User({});
-          MB.user.set('buckets', new MB.models.BucketCollection());
           MB.isLoggedIn = false;
           _sync = Backbone.sync;
           Backbone.sync = function(method, model, options) {
