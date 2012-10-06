@@ -19,6 +19,7 @@ if typeof(loggedIn) === 'undefined'
             $(document).ready(function(){
               $('.logout').click(function() {
                 MB.user = null;
+                MB.isLoggedIn = false;
                 MB.auth.logout(function() {
                   // backbone's equivalent to refresh
                   Backbone.history.loadUrl(window.location.hash);
@@ -27,3 +28,29 @@ if typeof(loggedIn) === 'undefined'
             });
         else
           button.login.btn Login
+          script
+            $(document).ready(function(){
+              $('.login').click(function() {
+                MB.auth.promptUserForLogin(function(data) {
+                  console.log(data);
+                  if (data.isNewUser) {
+                    MB.user.set('id', data.user.id);
+                    MB.user.save();
+                    MB.user.get('buckets').each(function(bucket) {
+                      bucket.save();
+                    });
+                    // backbone's equivalent to refresh
+                    Backbone.history.loadUrl(window.location.hash);
+                  } else {
+                    MB.user = new MB.models.User(data.user);
+                    MB.isLoggedIn = true;
+                    MB.user.get('buckets').fetch({
+                      success: function() {
+                        // backbone's equivalent to refresh
+                        Backbone.history.loadUrl(window.location.hash);
+                      }
+                    });
+                  }
+                });
+              });
+            });

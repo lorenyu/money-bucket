@@ -1,23 +1,5 @@
 extends page
 
-block prepend nav
-  loggedIn = loggedIn
-  script
-    //- TODO: Refactor this to Backbone View
-    $(document).ready(function(){
-      $('.login').click(function() {
-        MB.auth.promptUserForLogin(function(data) {
-          MB.user = new MB.models.User(data.user);
-          MB.user.get('buckets').fetch({
-            success: function() {
-              // backbone's equivalent to refresh
-              Backbone.history.loadUrl(window.location.hash);
-            }
-          });
-        });
-      });
-    });
-
 block containerContents
   .page-header
     h1 Feedback 
