@@ -7,8 +7,16 @@ var express = require('express'),
   models = require('./models'),
   services = require('./services'),
   ObjectID = require('mongodb').ObjectID,
+  db = require('./db'),
 
   https = require('https'); // TODO remove this once we refactor out the controller logic
+
+db.open(function(err) {
+  if (err) {
+    console.error('Cannot connect to mongo.');
+    process.exit(1);
+  }
+});
 
 var app = express.createServer();
 
