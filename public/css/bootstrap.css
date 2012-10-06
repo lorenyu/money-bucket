@@ -160,8 +160,8 @@ body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 13px;
   line-height: 18px;
-  color: #333333;
-  background-color: #ffffff;
+  color: #0F2F3F;
+  background-color: rgb(240,255,230);
   padding-top: 50px; /* customized - LY */
 }
 
@@ -587,7 +587,7 @@ dd {
 hr {
   margin: 18px 0;
   border: 0;
-  border-top: 1px solid #eeeeee;
+  border-top: 1px solid #A6C09C;
   border-bottom: 1px solid #ffffff;
 }
 
@@ -2588,14 +2588,14 @@ button.close {
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
   vertical-align: middle;
   cursor: pointer;
-  background-color: #f5f5f5;
-  *background-color: #e6e6e6;
-  background-image: -ms-linear-gradient(top, #ffffff, #e6e6e6);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
-  background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
-  background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
-  background-image: linear-gradient(top, #ffffff, #e6e6e6);
-  background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
+  background-color: #C0F078;
+  *background-color: #87C067;
+  background-image: -ms-linear-gradient(top, #C0F078, #87C067);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#C0F078), to(#87C067));
+  background-image: -webkit-linear-gradient(top, #C0F078, #87C067);
+  background-image: -o-linear-gradient(top, #C0F078, #87C067);
+  background-image: linear-gradient(top, #C0F078, #87C067);
+  background-image: -moz-linear-gradient(top, #C0F078, #87C067);
   background-repeat: repeat-x;
   border: 1px solid #cccccc;
   *border: 0;
@@ -2618,8 +2618,8 @@ button.close {
 .btn.active,
 .btn.disabled,
 .btn[disabled] {
-  background-color: #e6e6e6;
-  *background-color: #d9d9d9;
+  background-color: #87C067;
+  *background-color: #87C067;
 }
 
 .btn:active,
@@ -2634,8 +2634,8 @@ button.close {
 .btn:hover {
   color: #333333;
   text-decoration: none;
-  background-color: #e6e6e6;
-  *background-color: #d9d9d9;
+  background-color: #87C067;
+  *background-color: #87C067;
   /* Buttons in IE7 don't get borders, so darken on hover */
 
   background-position: 0 -15px;
@@ -2654,8 +2654,8 @@ button.close {
 
 .btn.active,
 .btn:active {
-  background-color: #e6e6e6;
-  background-color: #d9d9d9 \9;
+  background-color: #87C067;
+  background-color: #87C067 \9;
   background-image: none;
   outline: 0;
   -webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -3182,9 +3182,22 @@ input[type="submit"].btn.btn-mini {
 }
 
 .alert-info {
-  color: #3a87ad;
-  background-color: #d9edf7;
-  border-color: #bce8f1;
+  color: #0F2F3F;
+  background-color: #ffffff;
+  border-color: #B6D86D;
+  border-radius: 12px;
+  border-width: 7px;
+  box-shadow: 0 0 12px #4D810B;
+  font-size: 18px;
+  padding-left: 35px;
+}
+.alert-info h3 {
+  font-size: 25px;
+  line-height: 48px;
+}
+.alert-info.alert-block {
+  padding-top: 18px;
+  padding-bottom: 24px;
 }
 
 .alert-block {
@@ -3580,14 +3593,14 @@ input[type="submit"].btn.btn-mini {
   min-height: 40px;
   padding-right: 20px;
   padding-left: 20px;
-  background-color: #2c2c2c;
-  background-image: -moz-linear-gradient(top, #333333, #222222);
+  background-color: #F0FFE6;
+/*  background-image: -moz-linear-gradient(top, #333333, #222222);
   background-image: -ms-linear-gradient(top, #333333, #222222);
   background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#333333), to(#222222));
   background-image: -webkit-linear-gradient(top, #333333, #222222);
   background-image: -o-linear-gradient(top, #333333, #222222);
   background-image: linear-gradient(top, #333333, #222222);
-  background-repeat: repeat-x;
+  background-repeat: repeat-x;*/
   -webkit-border-radius: 4px;
      -moz-border-radius: 4px;
           border-radius: 4px;
@@ -3614,14 +3627,14 @@ input[type="submit"].btn.btn-mini {
 }
 
 .navbar .brand {
+  background: url(/img/money-cub.png) 0 0 / 35px 35px no-repeat;
   display: block;
   float: left;
-  padding: 8px 20px 12px;
-  margin-left: -20px;
+  padding: 0px 20px 0px 40px;
   font-size: 20px;
   font-weight: 200;
-  line-height: 1;
-  color: #999999;
+  line-height: 35px;
+  color: #0F2F3F;
 }
 
 .navbar .navbar-text {
@@ -4942,10 +4955,11 @@ a.badge:hover {
 .hero-unit {
   padding: 60px;
   margin-bottom: 30px;
-  background-color: #eeeeee;
+  background-color: #B3DEF0;
   -webkit-border-radius: 6px;
      -moz-border-radius: 6px;
           border-radius: 6px;
+  box-shadow: inset 0 0 48px #8DB2C7;
 }
 
 .hero-unit h1 {
