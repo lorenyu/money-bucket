@@ -32,6 +32,7 @@ if typeof(loggedIn) === 'undefined'
               $('.login').click(function() {
                 MB.auth.promptUserForLogin(function(data) {
                   console.log(data);
+                  MB.isLoggedIn = true;
                   if (data.isNewUser) {
                     MB.user.set('id', data.user.id);
                     MB.user.save();
@@ -42,7 +43,6 @@ if typeof(loggedIn) === 'undefined'
                     Backbone.history.loadUrl(window.location.hash);
                   } else {
                     MB.user = new MB.models.User(data.user);
-                    MB.isLoggedIn = true;
                     MB.user.get('buckets').fetch({
                       success: function() {
                         // backbone's equivalent to refresh
