@@ -36,9 +36,10 @@ if typeof(loggedIn) === 'undefined'
                   if (data.isNewUser) {
                     MB.user.set('id', data.user.id);
                     MB.user.save();
-                    MB.user.get('buckets').each(function(bucket) {
-                      bucket.save();
-                    });
+                    // save in reverse order because on server things are added reverse chronologically
+                    for (var i = MB.user.get('buckets').length - 1; i >= 0; i--) {
+                      MB.user.get('buckets').at(i).save();
+                    }
                     // backbone's equivalent to refresh
                     Backbone.history.loadUrl(window.location.hash);
                   } else {
