@@ -32,16 +32,13 @@ MB.views.pages.BucketsPageView = Backbone.View.extend({
     return this;
   },
   addBucket: function() {
-    var bucket = this.model.get('user').get('buckets').create({}, {
-      at: 0,
-      wait: true,
-      success: _.bind(function(bucket) {
-        this.editingBuckets[bucket.id] = true;
-
-        this.render();
-        $('input[name=id][value=' + bucket.id + ']').parents('form').find('[name=name]').focus();
-      }, this)
+    var bucket = new MB.models.Bucket({});
+    bucket.save();
+    this.model.get('user').get('buckets').add(bucket, {
+      at: 0
     });
+    this.render();
+    $('input[name=id][value=' + bucket.cid + ']').parents('form').find('[name=name]').focus();
   },
   addExampleBuckets: function() {
     this.model.get('user').get('buckets').reset([

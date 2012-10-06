@@ -26,7 +26,7 @@ block containerContents
   - for (var i = 0; i < buckets.length / 4; i++)
     .row
       for bucket in buckets.slice(4*i, 4*i + 4)
-        .bucket.span3(bucketId=bucket.id)
+        .bucket.span3(bucketId=bucket.cid)
           .well
             h3.name= bucket.name + ' '
             p.amount.lead $#{bucket.amount}
