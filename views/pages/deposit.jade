@@ -4,6 +4,8 @@ block prepend nav
   activeItem = 'deposit'
 
 block containerContents
+  if !loggedIn
+    a.alert.sign-up-to-save.login Sign up to save
   .page-header
     h1 Allocate Money 
       small Fulfill your goals.

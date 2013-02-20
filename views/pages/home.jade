@@ -4,6 +4,8 @@ block prepend nav
   activeItem = 'home'
 
 block containerContents
+  if !loggedIn
+    a.alert.sign-up-to-save.login Sign up to save
   .page-header
     h1 Home 
       small It's where the heart is.
