@@ -20,8 +20,8 @@ if typeof(loggedIn) === 'undefined'
                 MB.user = null;
                 MB.isLoggedIn = false;
                 MB.auth.logout(function() {
-                  // backbone's equivalent to refresh
-                  Backbone.history.loadUrl(window.location.hash);
+                  MB.router.go('');
+                  window.location.reload();
                 });
               });
             });
