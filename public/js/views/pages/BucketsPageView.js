@@ -32,9 +32,7 @@ MB.views.pages.BucketsPageView = Backbone.View.extend({
     return this;
   },
   addBucket: function() {
-    var bucket = new MB.models.Bucket({});
-    bucket.save();
-    this.model.get('user').get('buckets').add(bucket, {
+    var bucket = this.model.get('user').get('buckets').create({}, {
       at: 0
     });
     this.render();
