@@ -23,13 +23,4 @@ block containerContents
             if editingBuckets[bucket.cid]
               include ../components/buckets/edit-bucket
             else
-              .bucket(bucketId=bucket.cid)
-                .well
-                  .btn-toolbar
-                    .delete.btn.pull-right
-                      i.icon-remove
-                    .edit.btn.pull-right
-                      i.icon-pencil
-                  h3.name= bucket.name
-                  h4
-                    small.description= bucket.description
+              include ../components/buckets/manage-bucket
