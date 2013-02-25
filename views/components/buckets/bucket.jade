@@ -3,10 +3,10 @@
     h3.name= bucket.name
     p.lead $
         span.amount= bucket.amount
-    p
+    form
       .input-prepend.input-append
         .add-on $
-        button.btn(amount=1000) 1,000
-        button.btn(amount=100) 100
-        button.btn(amount=10) 10
-        button.btn(amount=1) 1
+        input.amount.span1(type='tel', placeholder='0')
+        submitIcon = submitIcon || 'icon-ok'
+        button.btn(type='submit') &nbsp;
+          i(class=submitIcon)

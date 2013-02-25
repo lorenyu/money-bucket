@@ -18,4 +18,5 @@ block containerContents
     - for (var i = 0; i < buckets.length / 4; i++)
       .row
         for bucket in buckets.slice(4*i, 4*i + 4)
+          submitIcon = 'icon-plus'
           include ../components/buckets/bucket

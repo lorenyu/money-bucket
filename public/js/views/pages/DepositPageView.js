@@ -2,7 +2,7 @@ MB.namespace('views.pages');
 
 MB.views.pages.DepositPageView = Backbone.View.extend({
   events: {
-    'click .bucket .btn': 'add',
+    'submit .bucket form': 'add',
     'submit .deposit-form': 'deposit',
 
     //new user experience only (not used very often)
@@ -11,7 +11,7 @@ MB.views.pages.DepositPageView = Backbone.View.extend({
   isFirstTime: 0,
   initialize: function(options) {
     if (this.model.get('user').get('amount') <= 0) {
-      this.model.set('statusMsg', '<div class="alert alert-info alert-block"><button data-dismiss="alert" class="close">×</button><h3 class="alert-heading">Adding Money</h3><p>Enter how much money you want to add, then click <a class="deposit btn">Add Money</a>.</p></div>');
+      this.model.set('statusMsg', '<div class="alert alert-info alert-block"><button data-dismiss="alert" class="close">×</button><h3 class="alert-heading">Adding Money</h3><p>Enter how much money you want to add, then click the plus sign to add money.</p></div>');
     }
 
     this.isFirstTime = this.model.get('user').get('amount') <= 0 || this.model.get('user').get('allocatedAmount') <= 0;
@@ -51,24 +51,20 @@ MB.views.pages.DepositPageView = Backbone.View.extend({
     return this;
   },
   add: function(event) {
-    var $target = $(event.target),
-        amount = parseInt($target.attr('amount')),
+    var $target = $(event.target).find('input.amount'),
+        amount = parseInt($target.val()),
         bucketId = $target.parents('.bucket').attr('bucketId'),
         bucket = this.model.get('user').get('buckets').getByCid(bucketId),
         curAmount = bucket.get('amount');
 
-    if ($target.hasClass('disabled')) {
-      return;
-    }
-
     curAmount += amount;
 
     bucket.set('amount', curAmount);
+    $target.val(''); // clear the input after submitting
 
     if (this.isFirstTime) {
-      this.model.set('statusMsg', '<div class="alert alert-info alert-block"><button data-dismiss="alert" class="close">×</button><h3 class="alert-heading">Success</h3>You allocated all your money and are ready to <a href="#withdraw" class="btn">Spend</a> it when you need to.</p></div>');
+      this.model.set('statusMsg', '<div class="alert alert-info alert-block"><button data-dismiss="alert" class="close">×</button><h3 class="alert-heading">Success</h3>You allocated some money. Now you can <a href="#withdraw" class="btn">Spend</a> it when you need to.</p></div>');
     }
-
 
     bucket.save();
   },

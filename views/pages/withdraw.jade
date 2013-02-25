@@ -11,15 +11,9 @@ block containerContents
       small Choose wisely.
   .row
     .span3
-      form.withdraw-form
-        p.withdraw-amount.lead $
-          span.amount= withdrawAmount
-          |  
-          button.btn(type='submit') Spend
-    .span3
-      p.allocated.lead $
+      p.allocated.lead Available $
         span.amount= user.allocatedAmount
-        |  Available
   .row
     for bucket in buckets
+      submitIcon = 'icon-minus'
       include ../components/buckets/bucket
