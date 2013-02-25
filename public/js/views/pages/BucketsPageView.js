@@ -93,18 +93,26 @@ MB.views.pages.BucketsPageView = Backbone.View.extend({
   },
   edit: function(event) {
     var $target = $(event.target),
-        bucketId = $target.parents('.bucket').attr('bucketId');
+        $bucketEl = $target.parents('.bucket'),
+        bucketId = $bucketEl.attr('bucketId'),
+        bucket = this.model.get('user').get('buckets').getByCid(bucketId);
+
     this.editingBuckets[bucketId] = true;
-    this.render();
+
+    $bucketEl.replaceWith(MB.render.components.buckets.editBucket({
+      bucket: bucket.toJSON()
+    }));
   },
   delete: function(event) {
     var $target = $(event.target),
-        bucketId = $target.parents('.bucket').attr('bucketId'),
+        $bucketEl = $target.parents('.bucket'),
+        bucketId = $bucketEl.attr('bucketId'),
         bucket = this.model.get('user').get('buckets').getByCid(bucketId);
     if (!confirm('Delete cubby: ' + bucket.get('name') + '?')) {
       return;
     }
     bucket.destroy();
+    // $bucketEl.remove(); // This doesn't work because buckets from later rows do not reflow into the current row
     this.render();
   },
   saveBucket: function(event) {
