@@ -15,4 +15,5 @@ block containerContents
         span.amount= user.allocatedAmount
   .row
     for bucket in buckets
+      submitIcon = 'icon-minus'
       include ../components/buckets/bucket

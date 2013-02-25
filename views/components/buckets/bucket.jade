@@ -7,3 +7,6 @@
       .input-prepend.input-append
         .add-on $
         input.amount.span1(type='tel', placeholder='0')
+        submitIcon = submitIcon || 'icon-ok'
+        button.btn(type='submit') &nbsp;
+          i(class=submitIcon)
