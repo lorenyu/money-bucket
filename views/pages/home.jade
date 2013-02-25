@@ -11,11 +11,7 @@ block containerContents
       small It's where the heart is.
   .row
     .span2
-      p.lead $#{user.amount} Total
-    .span2
-      p.lead $#{user.allocatedAmount} Allocated
-    .span2
-      p.lead $#{user.unallocatedAmount} Unallocated
+      p.lead Total $#{user.amount}
   if buckets.length <= 0
     .row
       .span12

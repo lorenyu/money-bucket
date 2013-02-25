@@ -10,24 +10,9 @@ block containerContents
     h1 Allocate Money 
       small Fulfill your goals.
   .row
-    .span12
-      form.deposit-form
-        .input-prepend.input-append
-          .add-on $
-          input.input-medium.deposit-amount(type='text', placeholder=0)
-          button.btn(type='submit') Add Money
-  .row
     .span3
-      p.allocated.lead $
+      p.allocated.lead Total $
         span.amount= user.allocatedAmount
-        |  Allocated 
-    .span3
-      p.unallocated.lead(style=(user.unallocatedAmount <= 0 ? 'display:none;' : '') ) $
-        span.amount= user.unallocatedAmount
-        |  Unallocated 
-        i.icon-warning-sign(rel='tooltip', title='You have unallocated money', data-content='Put a purpose to the rest of your money sooner to give yourself more confidence in your spending later.')
-        script
-          $('.icon-warning-sign').popover({ placement: 'top'});
   .status-msg!= statusMsg
   .buckets
     - for (var i = 0; i < buckets.length / 4; i++)

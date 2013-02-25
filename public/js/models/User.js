@@ -6,14 +6,12 @@ MB.models.User = Backbone.Model.extend({
     'facebookId': 0,
     'amount': 0,
     'buckets': new MB.models.BucketCollection(),
-    'allocatedAmount': 0,
-    'unallocatedAmount': 0
+    'allocatedAmount': 0
   },
   urlRoot: '/api/users',
   initialize: function(attributes) {
     this.get('buckets').on('reset', function(buckets) {
       this._updateAllocatedAmount();
-      this._updateUnallocatedAmount();
 
       this.get('buckets').each(function(bucket) {
         bucket.on('change:amount', this._updateAllocatedAmount, this);
@@ -28,25 +26,15 @@ MB.models.User = Backbone.Model.extend({
       bucket.on('change:amount', this._updateAllocatedAmount, this);
     }, this);
 
-    this.on('change:amount', this._updateUnallocatedAmount, this);
-
     this._updateAllocatedAmount();
   },
   _updateAllocatedAmount: function() {
     var allocatedAmount = this.get('buckets').totalAmount();
+    this.set('amount', allocatedAmount);
     if (this.get('allocatedAmount') === allocatedAmount) {
       return this;
     }
     this.set('allocatedAmount', allocatedAmount);
-    this._updateUnallocatedAmount();
     return this;
-  },
-  _updateUnallocatedAmount: function() {
-    var unallocatedAmount = this.get('amount') - this.get('allocatedAmount');
-    if (this.get('unallocatedAmount') === unallocatedAmount) {
-      return this;
-    }
-    this.set('unallocatedAmount', unallocatedAmount);
-    return this;
-  },
+  }
 });

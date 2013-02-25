@@ -24,14 +24,6 @@ MB.views.pages.DepositPageView = Backbone.View.extend({
       loggedIn: MB.isLoggedIn
     }));
 
-    this.model.get('user').on('change:unallocatedAmount', function(model, options) {
-      if (model.get('unallocatedAmount') === 0) {
-        this.$el.find('.unallocated').css('display', 'none');
-      } else {
-        this.$el.find('.unallocated').css('display', 'block');
-      }
-    }, this);
-
     // create PrimitivePropertyView for each bucket to re-render that bucket when it changes
     this.$el.find('.bucket').each(_.bind(function(index, bucketEl) {
       var $bucketEl = $(bucketEl),
@@ -44,16 +36,11 @@ MB.views.pages.DepositPageView = Backbone.View.extend({
       });
     }, this));
 
-    // create PrimitivePropertyView for the allocated and unallocated amounts
+    // create PrimitivePropertyView for the allocated amounts
     new MB.views.components.PrimitivePropertyView({
       el: this.$el.find('.allocated .amount'),
       model: this.model.get('user'),
       propertyName: 'allocatedAmount'
-    });
-    new MB.views.components.PrimitivePropertyView({
-      el: this.$el.find('.unallocated .amount'),
-      model: this.model.get('user'),
-      propertyName: 'unallocatedAmount'
     });
     new MB.views.components.PrimitivePropertyView({
       el: this.$el.find('.status-msg'),
@@ -74,16 +61,11 @@ MB.views.pages.DepositPageView = Backbone.View.extend({
       return;
     }
 
-    if (this.model.get('user').get('unallocatedAmount') <= 0) {
-      this.model.set('statusMsg', '<div class="alert alert-info alert-block"><button data-dismiss="alert" class="close">×</button><a class="deposit btn">Add money</a> to allocate.</p></div>');
-    }
-
-    amount = Math.min(this.model.get('user').get('unallocatedAmount'), amount);
     curAmount += amount;
 
     bucket.set('amount', curAmount);
 
-    if (this.isFirstTime && this.model.get('user').get('unallocatedAmount') <= 0) {
+    if (this.isFirstTime) {
       this.model.set('statusMsg', '<div class="alert alert-info alert-block"><button data-dismiss="alert" class="close">×</button><h3 class="alert-heading">Success</h3>You allocated all your money and are ready to <a href="#withdraw" class="btn">Spend</a> it when you need to.</p></div>');
     }
 
