@@ -120,6 +120,7 @@ MB.views.pages.BucketsPageView = Backbone.View.extend({
     var $target = $(event.target),
         bucketId = $target.find('[name=id]').val(),
         bucket = this.model.get('user').get('buckets').getByCid(bucketId);
+
     bucket.set({
       name: $target.find('[name=name]').val(),
       description: $target.find('[name=description]').val()
@@ -131,7 +132,9 @@ MB.views.pages.BucketsPageView = Backbone.View.extend({
     }
 
     delete this.editingBuckets[bucketId];
-    this.render();
+    $target.replaceWith(MB.render.components.buckets.manageBucket({
+      bucket: bucket.toJSON()
+    }));
 
     bucket.save();
   },
