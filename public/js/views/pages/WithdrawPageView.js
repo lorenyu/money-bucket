@@ -42,6 +42,10 @@ MB.views.pages.WithdrawPageView = Backbone.View.extend({
         bucket = this.model.get('user').get('buckets').getByCid(bucketId),
         curAmount = bucket.get('amount');
 
+    if (isNaN(amount)) {
+      return;
+    }
+
     amount = Math.min(curAmount, amount);
     curAmount -= amount;
 
