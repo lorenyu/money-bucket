@@ -685,7 +685,7 @@
   }
   .navbar-fixed-top,
   .navbar-fixed-bottom {
-    position: static;
+    /*position: static;*/
   }
   .navbar-fixed-top {
     margin-bottom: 18px;
