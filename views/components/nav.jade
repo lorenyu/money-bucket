@@ -5,14 +5,22 @@ if typeof(loggedIn) === 'undefined'
 .navbar.navbar-fixed-top
   .navbar-inner
     .container
-      a.brand(href='#') Money Cubbies
+      a.brand.hidden-phone(href='#') Money Cubbies
       .nav.btn-group
-        a.btn(href='#withdraw', class=(activeItem == 'withdraw' ? 'active' : '' )) Spend
-        a.btn(href='#deposit', class=(activeItem == 'deposit' ? 'active' : '' )) Allocate
-        a.btn(href='#buckets', class=(activeItem == 'buckets' ? 'active' : '' )) Manage Cubbies
+        a.btn(href='#withdraw', class=(activeItem == 'withdraw' ? 'active' : '' ))
+          i.icon-shopping-cart
+          span Spend
+        a.btn(href='#deposit', class=(activeItem == 'deposit' ? 'active' : '' ))
+          i.icon-plus
+          span Allocate
+        a.btn(href='#buckets', class=(activeItem == 'buckets' ? 'active' : '' ))
+          i.icon-th
+          span Cubbies
       ul.nav.pull-right
         if loggedIn
-          button.logout.btn Logout
+          button.logout.btn
+            i.icon-eject
+            span Logout
           //- TODO: refactor
           script
             $(document).ready(function(){
@@ -26,7 +34,9 @@ if typeof(loggedIn) === 'undefined'
               });
             });
         else
-          button.login.btn Login
+          button.login.btn
+            i.icon-user
+            span Login
           script
             $(document).ready(function(){
               $('.login').click(function() {

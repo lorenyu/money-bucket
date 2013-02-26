@@ -142,8 +142,8 @@
   }
   .navbar-fixed-top,
   .navbar-fixed-bottom {
-    margin-right: -20px;
-    margin-left: -20px;
+/*    margin-right: -20px;
+    margin-left: -20px;*/
   }
   .container-fluid {
     padding: 0;
@@ -681,7 +681,7 @@
 
 @media (max-width: 979px) {
   body {
-    padding-top: 0;
+    /*padding-top: 0;*/
   }
   .navbar-fixed-top,
   .navbar-fixed-bottom {
@@ -695,16 +695,16 @@
   }
   .navbar-fixed-top .navbar-inner,
   .navbar-fixed-bottom .navbar-inner {
-    padding: 5px;
+    /*padding: 5px;*/
   }
   .navbar .container {
     width: auto;
     padding: 0;
   }
   .navbar .brand {
-    padding-right: 10px;
+/*    padding-right: 10px;
     padding-left: 10px;
-    margin: 0 0 0 -5px;
+    margin: 0 0 0 -5px;*/
   }
   .nav-collapse {
     clear: both;
