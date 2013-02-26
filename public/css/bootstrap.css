@@ -4975,6 +4975,11 @@ a.badge:hover {
   font-weight: 200;
   line-height: 27px;
   color: inherit;
+  margin: 14px 0;
+}
+
+.hero-unit [class*="span"] {
+  margin: 0;
 }
 
 .pull-right {
