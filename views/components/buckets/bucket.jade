@@ -3,7 +3,8 @@
     h3.name= bucket.name
     p.lead $
         span.amount= bucket.amount
-    form
+    //- need action attribute to be correct HTML and for iPhone to show the "Go" button
+    form(action='')
       .input-prepend.input-append
         .add-on $
         input.amount.span1(type='tel', placeholder='0')
