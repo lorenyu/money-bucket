@@ -139,9 +139,11 @@
   body {
     padding-right: 20px;
     padding-left: 20px;
+    padding-top: 70px;
   }
   .navbar-fixed-top,
   .navbar-fixed-bottom {
+    padding-top: 20px;
 /*    margin-right: -20px;
     margin-left: -20px;*/
   }
