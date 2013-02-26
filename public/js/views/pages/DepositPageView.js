@@ -58,6 +58,11 @@ MB.views.pages.DepositPageView = Backbone.View.extend({
         curAmount = bucket.get('amount');
 
     if (isNaN(amount)) {
+      $target.val('');
+      // deferring until after this event loop because calling $target.focus immediately wasn't working
+      _.defer(function() {
+        $target.focus();
+      });
       return;
     }
 
