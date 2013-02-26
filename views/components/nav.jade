@@ -18,49 +18,6 @@ if typeof(loggedIn) === 'undefined'
           span Cubbies
       ul.nav.pull-right
         if loggedIn
-          button.logout.btn
-            i.icon-eject
-            span Logout
-          //- TODO: refactor
-          script
-            $(document).ready(function(){
-              $('.logout').click(function() {
-                MB.user = null;
-                MB.isLoggedIn = false;
-                MB.auth.logout(function() {
-                  MB.router.go('');
-                  window.location.reload();
-                });
-              });
-            });
+          include logout-button
         else
-          button.login.btn
-            i.icon-user
-            span Login
-          script
-            $(document).ready(function(){
-              $('.login').click(function() {
-                MB.auth.promptUserForLogin(function(data) {
-                  console.log(data);
-                  MB.isLoggedIn = true;
-                  if (data.isNewUser) {
-                    MB.user.set('id', data.user.id);
-                    MB.user.save();
-                    // save in reverse order because on server things are added reverse chronologically
-                    for (var i = MB.user.get('buckets').length - 1; i >= 0; i--) {
-                      MB.user.get('buckets').at(i).save();
-                    }
-                    // backbone's equivalent to refresh
-                    Backbone.history.loadUrl(window.location.hash);
-                  } else {
-                    MB.user = new MB.models.User(data.user);
-                    MB.user.get('buckets').fetch({
-                      success: function() {
-                        // backbone's equivalent to refresh
-                        Backbone.history.loadUrl(window.location.hash);
-                      }
-                    });
-                  }
-                });
-              });
-            });
+          include login-button

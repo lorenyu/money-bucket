@@ -1,0 +1,35 @@
+//- @param type = 'button' || 'link'
+type = type || 'button'
+if type == 'button'
+  button.login.btn
+    i.icon-user
+    span Login
+else
+  a.login(href='#') Login
+script
+  $(document).ready(function(){
+    $('.login').click(function() {
+      MB.auth.promptUserForLogin(function(data) {
+        console.log(data);
+        MB.isLoggedIn = true;
+        if (data.isNewUser) {
+          MB.user.set('id', data.user.id);
+          MB.user.save();
+          // save in reverse order because on server things are added reverse chronologically
+          for (var i = MB.user.get('buckets').length - 1; i >= 0; i--) {
+            MB.user.get('buckets').at(i).save();
+          }
+          // backbone's equivalent to refresh
+          Backbone.history.loadUrl(window.location.hash);
+        } else {
+          MB.user = new MB.models.User(data.user);
+          MB.user.get('buckets').fetch({
+            success: function() {
+              // backbone's equivalent to refresh
+              Backbone.history.loadUrl(window.location.hash);
+            }
+          });
+        }
+      });
+    });
+  });

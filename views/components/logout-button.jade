@@ -1,0 +1,15 @@
+button.logout.btn
+  i.icon-eject
+  span Logout
+//- TODO: refactor
+script
+  $(document).ready(function(){
+    $('.logout').click(function() {
+      MB.user = null;
+      MB.isLoggedIn = false;
+      MB.auth.logout(function() {
+        MB.router.go('');
+        window.location.reload();
+      });
+    });
+  });
